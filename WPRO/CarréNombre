@@ -1,0 +1,23 @@
+//Solution avec stockage
+<script>
+//Lecture de données
+var nb = window.prompt('Veuillez entrer un nombre, svp.', '0');
+
+var carre = nb*nb ;	//Calcul et stockage du résultat
+
+//Affichage sans calcul
+document.write ('<p>Le carré de ' + nb + ' vaut '+ carre +'.</p>');
+
+</script>
+
+
+//Solution sans stockage
+
+<script>
+//Lecture de données
+var nb = window.prompt('Veuillez entrer un nombre, svp.', '0');
+
+//Affichage avec calcul
+document.write ('<p>Le carré de ' + nb + ' vaut '+ nb*nb +'.</p>');
+
+</script>
