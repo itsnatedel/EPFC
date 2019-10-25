@@ -1,0 +1,43 @@
+<script>
+/*
+ * Programme qui affiche le montant de la prime d’un vendeur 
+ * lorsqu’il a entré son chiffre de vente 
+ * (prime de 10% sur son chiffre de vente s’il a vendu pour plus de 1000 €).
+ *
+ * @author N. Deltour <nathandeltour2@gmail.com>
+ * @version 0.1
+ */
+ 
+//Déclaration des variables et des constantes
+var chiffreVente;	//Donné par l'utilisateur
+var montantPrime;	//Calculé et affiché
+const TAUX_PRIME = 0.10;
+const PLANCHER_VENTE = 1000;
+
+//Lecture des données
+chiffreVente = parseFloat(prompt('Veuillez entre cotre chiffre de vente.'));
+
+//Traitement des données
+if(chiffreVente>PLANCHER_VENTE) {
+	montantPrime = chiffreVente*TAUX_PRIME;
+	
+	//Affichage du résultat
+	document.write('<p>Le montant de la prime est de '+montantPrime+' €.</p>');
+} else {
+	montantPrime = 0;
+	
+	//Affichage du résultat
+	document.write('<p>Aucune prime.</p>');
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
