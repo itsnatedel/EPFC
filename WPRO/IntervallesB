@@ -1,0 +1,40 @@
+<script>
+    /*
+    * Ecrire un programme qui demande un nombre à l'utilisateur
+    * Demander une borne inférieure et supérieure
+    * Ces bornes doivent être des nombres entiers positifs, 0 compris
+    * Afficher le nombre entre crochets ([x]) si dans l'intervalle
+    * b) Afficher "[TROP HAUT]" ou "[TROP BAS]" dans le cas contraire et en fonction des cas
+    * L'utilisateur peut tester autant de nombre qu'il veut
+    * Il peut arrêter le programme en tapant un nombre
+    * 
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    * 
+    */
+    //Déclaration des variables
+    var choixUser, borneInferieure, borneSuperieure;
+
+    //Vérif del a borne inférieure
+    do {
+        borneInferieure = parseInt(prompt('Entrez la borne inférieure'));
+    } while (isNaN(borneInferieure) || borneInferieure < 0);
+
+    //Vérif de la borne supérieure
+    do {
+        borneSuperieure = parseInt(prompt('Entrez la borne supérieure'));
+    } while (isNaN(borneSuperieure) || borneInferieure > borneSuperieure || borneSuperieure < 0);
+
+    //Vérif de l'input User par rapport aux bornes
+    do {
+        choixUser = parseFloat(prompt('Entrez votre nombre!'));
+        
+        if (choixUser >= borneInferieure && choixUser <= borneSuperieure) { //Si le choixUser est compris entre les intervalles..
+            alert('[' + choixUser + ']');
+        } else if (choixUser < borneInferieure) { //Si le choixUser est en dessous de la borne inférieure..
+            alert('[TROP BAS]');
+        } else if (choixUser > borneSuperieure) { //Si le choixUser est au-delà de la borne supérieure..
+            alert('[TROP HAUT]');
+        }
+    } while (!isNaN(prompt('Entrez un nombre pour continuer')));
+</script>
