@@ -1,0 +1,54 @@
+<script>
+/*
+ * Programme qui affiche le montant de la prime d’un vendeur 
+ * lorsqu’il a entré son chiffre de vente 
+ * (primes progressives:  0-500 => 2%, 501-1000 => 5%, plus de 1000 => 10%).
+ *
+ * @author N. Deltour <nathandeltour2@gmail.com>
+ * @version 0.1
+ */
+ 
+//Déclaration des variables et des constantes
+var chiffreVente;	//Donné par l'utilisateur
+var montantPrime;	//Calculé et affiché
+var tauxPrime;
+const FIRST_FLOOR = 500;
+const SECOND_FLOOR = 1000;
+
+do {
+	//Lecture des données + Validation des données entrantes
+	do {
+		chiffreVente = parseFloat(prompt('Veuillez entre votre chiffre de vente.'));
+	} while(   isNaN(chiffreVente) || chiffreVente<0  );
+
+
+	//Traitement des données
+	if(chiffreVente <= FIRST_FLOOR) {
+		tauxPrime = 0.02;
+	} else if(chiffreVente <= SECOND_FLOOR) {
+		tauxPrime = 0.05;
+	} else {
+		tauxPrime = 0.1;
+	}
+
+	//Calcul du montant de la prime
+	montantPrime = chiffreVente * tauxPrime;
+
+	//Affichage du résultat
+	if(montantPrime>0) {
+		document.write('<p style="color:darkblue">Le montant de la prime est de '+montantPrime+' €.</p>');
+	} else {
+		document.write('<p style="color:red">Aucune prime.</p>');
+	}
+} while(confirm('Voulez-vous recommencer?'));
+</script>
+
+
+
+
+
+
+
+
+
+
