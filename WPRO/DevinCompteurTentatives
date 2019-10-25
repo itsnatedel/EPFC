@@ -1,0 +1,36 @@
+<script>
+    /*
+    * Programme qui demande à l'utilisateur de deviner un nombre entre 0 et 10
+    * Le nombre à deviner sera généré automatiquement par l'ordinateur
+    * L'utilisateur a droit à plusieurs tentatives
+    * Lorsqu'il trouve une mauvaise réponse, le compteur de tentatives augmentera de 1
+    * Lorsqu'il trouve la bonne réponse, le programme affichera le nombre de tentatives
+    * 
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    * 
+    */
+
+    //Déclaration des variables
+    var nbUser, nbHasard, tentatives = 0;
+    const MAX = 10;
+
+    //Générer le nombre aléatoirement. 
+    nbHasard = Math.round(Math.random() * MAX); //On multiplie par la constante MAX pour avoir le nombre entre 0 et 10
+
+    //Demande d'input de l'utilisateur et vérification de cet input
+    do {
+        nbUser = parseInt(prompt('Entrez un entier compris entre 0 et 10'));
+    } while (nbUser < 0 || nbUser > 10 || isNaN(nbUser)); //On recommence tant que le nombre n'est pas compris entre 0 et 10 OU quand ce n'est pas un nombre
+
+    do {
+        if (nbUser == nbHasard) { //Si le nombre de l'utilisateur est égal au nombre généré
+            alert('Après ' + tentatives + ' tentatives, vous avez réussi à battre l\'ordinateur!');
+            break; //On utilise break pour sortir de la boucle et arrêter le programme
+        } else {
+            nbUser = parseInt(prompt('Raté.. entrez à nouveau un nombre!'));
+            tentatives++; //On incrémente le compteur de tentatives à chaque mauvaise réponse
+        }
+    } while (confirm('Recommencer?')); //On demande à l'utilisateur de recommencer s'il le souhaite
+
+</script>
