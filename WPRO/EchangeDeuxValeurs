@@ -1,0 +1,17 @@
+<script>
+var A = window.prompt('A vaut ', 5);
+var B = window.prompt('B vaut ', 3);
+var C;
+
+//Affichage avant le traitement
+document.write ('<p>A vaut ' + A + '</p>');
+document.write ('<p>B vaut ' + B + '</p>');
+
+C = A;
+A = B;
+B = C;
+
+//Affichage après le traitement
+document.write ('<p>A vaut ' + A + '</p>');
+document.write ('<p>B vaut ' + B + '</p>');
+</script>
