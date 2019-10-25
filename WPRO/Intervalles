@@ -1,5 +1,5 @@
 <script>
-   /**
+   /*
     * Ecrire un programme qui demande un nombre à l'utilisateur
     * Demander une borne inférieure et supérieure
     * Ces bornes doivent être des nombres entiers positifs, 0 compris
