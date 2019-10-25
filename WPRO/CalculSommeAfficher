@@ -1,0 +1,24 @@
+<script>
+    /*
+    * Écrivez un programme qui fait la somme d’une série d’entiers entrés un à un par l’utilisateur. 
+    * Déterminez une condition permettant d’arrêter le traitement. 
+    * b) Le total est affiché systématiquement après chaque entrée de l’utilisateur.
+    * 
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    * 
+    */
+
+    //Déclaration des variables 
+    var somme = 0, entierUser;
+    //Vérifier que l'entier entré est bien un nombre
+    do {
+        entierUser = parseInt(prompt('Entrez un entier'));
+        somme = entierUser; //On initialise la somme au premier entier de l'User
+    } while (isNaN(entierUser));
+    do {
+        //Traitement de la somme 
+        somme += parseInt(prompt('Un autre à ajouter?'));
+        alert('Le total est de : ' + somme + '');
+    } while (confirm('Voulez-vous recommencer?'));
+</script>
