@@ -1,0 +1,41 @@
+<script>
+var phVeille, phJour, variationph, type;
+var TypeAffiche = false;
+
+do {
+	//Lecture des données
+	do {
+		phVeille = parseFloat(prompt('Quel était le Ph d\'hier?'));
+	} while(isNaN(phVeille) || phVeille<0 || phVeille>14);
+	
+	do {
+		phJour = parseFloat(prompt('Quel est le Ph d\'aujourd\'hui?'));
+	} while(isNaN(phJour) || phJour<0 || phJour>14);
+
+    TypeAffiche = confirm('Voulez-vous afficher le type de Ph du jour?');
+	
+	//Calcul et traitement des données
+	variationph = Math.round((phJour-phVeille)/phVeille * 100);
+
+	if(TypeAffiche) {
+		if(phJour<5) {
+			type = 'Acide';
+		} else if(phJour>10) {
+			type = 'Alcalin';
+		} else {
+			type = 'Neutre';
+		}
+	}
+		
+	//Affichage des données
+	document.write('<p>Veille: '+phVeille+'</p>');
+	
+	if(TypeAffiche) {
+		document.write('<p>Aujourd\'hui: '+phJour+' ('+type+')</p>');
+	} else {
+		document.write('<p>Aujourd\'hui: '+phJour+'</p>');
+	}
+	
+	document.write('<p> '+variationph+'%</p>');
+} while(confirm('Voulez-vous recommencer?'));
+</script>
