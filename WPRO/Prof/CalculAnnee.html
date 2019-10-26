@@ -1,0 +1,86 @@
+<script>
+    var date, message;
+
+    do {
+        date=prompt('Veuillez entrer une date au format jjmmaaaa, svp');
+    } while(dateIncorrect(date));
+
+    var iJour=jour(date);
+    var strMois=mois(date);
+    var iAnnee=annee(date);
+    message = 'Nous sommes le '+iJour+' ' + strMois + ' ' + iAnnee;
+    document.write(message);
+    function jour(nbDate) {
+        return parseInt(nbDate/1000000);
+    }
+
+    function mois(nbDate) {
+        var iMois = parseInt(nbDate / 10000) % 100;
+        switch (iMois) {
+            case 1: return 'janvier';
+                break;
+            case 2: return 'février';
+                break;
+            case 3: return 'mars';
+                break;
+            case 4: return 'avril';
+                break;
+            case 5: return 'mai';
+                break;
+            case 6: return 'juin';
+                break;
+            case 7: return 'juillet';
+                break;
+            case 8: return 'aout';
+                break;
+            case 9: return 'septembre';
+                break;
+            case 10: return 'octobre';
+                break;
+            case 11: return 'novembre';
+                break;
+            case 12: return 'decembre';
+
+
+        }
+    }
+
+    function annee(nbDate) {
+        return nbDate % 10000;
+    }
+
+    function dateIncorrect(nbDate) {
+        if (isNaN(nbDate) || nbDate < 0 || nbDate > 31129999) return true;
+        var iJour = jour(nbDate);
+        var iMois = parseInt((nbDate - jour(nbDate) * 1000000) / 10000);
+        var iAnnee = annee(nbDate);
+
+        if (iAnnee < 1970) return true;
+        if (iMois < 1 || iMois > 12) return true;
+
+        switch (iMois) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                if (iJour < 1 || iJour > 31) return true;
+                break;
+            case 2:
+                if ((iAnnee % 400) == 0 || ((iAnnee % 4) == 0 && (iAnnee % 100) != 0)) {
+                    if (iJour < 1 || iJour > 29) return true;
+                } else {
+                    if (iJour < 1 || iJour > 28) return true;
+                }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if (iJour < 1 || iJour > 30) return true;
+                break;
+        }
+    }
+</script>
