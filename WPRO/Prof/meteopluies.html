@@ -1,0 +1,52 @@
+<meta charset="utf-8" />
+<script>
+/*
+ * Calcul et affichage de la variation du niveau d'acidité de l'eau de pluie
+ * entre les relevés du jour et de la veille.
+ * Affichage éventuel du type de Ph (Acide/Neutre/Alcalin)
+ *
+ * Auteur: Cédryc Ruth
+ * Date: 16/10/2015
+ */
+
+//Déclaration des variables
+var phVeille, phJour, variation, type;
+var avecType = false;
+
+do {
+	//Lecture des données
+	do {
+		phVeille = parseFloat(prompt('Quel était le Ph d\'hier?'));
+	} while(isNaN(phVeille) || phVeille<0 || phVeille>14);
+	
+	do {
+		phJour = parseFloat(prompt('Quel est le Ph d\'aujourd\'hui?'));
+	} while(isNaN(phJour) || phJour<0 || phJour>14);
+
+	avecType = confirm('Voulez-vous afficher le type de Ph du jour?');
+	
+	//Calcul et traitement des données
+	variation = (phJour-phVeille)/phVeille * 100;
+
+	if(avecType) {
+		if(phJour<5) {
+			type = 'Acide'
+		} else if(phJour>10) {
+			type = 'Alcalin';
+		} else {
+			type = 'Neutre';
+		}
+	}
+		
+	//Affichage des données
+	document.write('<p>Veille: '+phVeille+'</p>');
+	
+	if(avecType) {
+		document.write('<p>Aujourd\'hui: '+phJour+' ('+type+')</p>');
+	} else {
+		document.write('<p>Aujourd\'hui: '+phJour+'</p>');
+	}
+	
+	document.write('<p>=&gt; '+variation+'%</p>');
+} while(confirm('Voulez-vous recommencer?'));
+</script>
