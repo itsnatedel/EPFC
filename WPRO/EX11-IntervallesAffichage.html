@@ -1,0 +1,69 @@
+<script>
+    /*
+    * Ecrire un programme qui demande un nombre à l'utilisateur
+    * Demander une borne inférieure et supérieure
+    * Ces bornes doivent être des nombres entiers positifs, 0 compris
+    * Afficher le nombre entre crochets ([x]) si dans l'intervalle
+    * Afficher "[TROP HAUT]" ou "[TROP BAS]" dans le cas contraire et en fonction des cas
+    * L'utilisateur peut tester autant de nombre qu'il veut
+    * Il peut arrêter le programme en tapant un nombre
+    * 11) Affiche:
+    * La liste des nombres compris dans l’intervalle
+    * Le nombre total de nombres compris dans l’intervalle,
+    * L’indice dans cet intervalle du nombre testé.
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    * 
+    */
+    //Déclaration des variables
+    var choixUser, borneInferieure, borneSuperieure, i, indice, listeNb, compteurNb;
+
+    //Vérif de la borne inférieure
+    do {
+        borneInferieure = parseInt(prompt('Entrez la borne inférieure'));
+    } while (isNaN(borneInferieure) || borneInferieure < 0);
+
+    //Vérif de la borne supérieure
+    do {
+        borneSuperieure = parseInt(prompt('Entrez la borne supérieure'));
+    } while (isNaN(borneSuperieure) || borneInferieure > borneSuperieure || borneSuperieure < 0);
+
+    do {
+        
+        choixUser = parseFloat(prompt('Entrez votre nombre!'));//Vérif de l'input utilisateur
+
+        listeNb = ''; //On réinitialise ces trois variables
+        compteurNb = 0; //Car si ce n'est pas fait dans le do..while du programme principal
+        indice = 0; //Elles garderont les valeurs des anciennes itérations
+
+        document.write('<p> ' + borneInferieure + ' ' + borneSuperieure + '</p>'); //Afficher la borne inférieure et supérieure
+
+        for (i = borneInferieure; i < borneSuperieure; i++) { //boucle "for" qui s'étend de la borne inférieure jusqu'à la borne supérieure
+            compteurNb++; //Le nombre total de nombres compris dans l’intervalle
+            listeNb += (i + " "); //Stocke la liste des nombres compris dans l’intervalle, dans une chaine de caractères
+        }
+
+        document.write('<p>[ ' + listeNb + ' ] ' + '' + compteurNb + '</p>'); //Montrer les nombres entre les intervalles + le nombre total
+        document.write('<p>' + choixUser + '</p>'); //Montrer le nombre choisi par l'utilisateur
+
+
+        if (choixUser >= borneInferieure && choixUser <= borneSuperieure) { //Si le choixUser est compris entre les intervalles..
+            document.write('<p>[' + choixUser + ']</p>');
+        } else if (choixUser < borneInferieure) { //Si le choixUser est en dessous de la borne inférieure..
+            document.write('<p>[TROP BAS]</p>');
+        } else if (choixUser > borneSuperieure) { //Si le choixUser est au-delà de la borne supérieure..
+            document.write('<p>[TROP HAUT]</p>');
+        }
+
+        //Indice
+        for (i = borneInferieure; i < borneSuperieure; i++) { //boucle "for" qui parcourt les valeurs de i pour trouver l'indice
+            if (i == choixUser) { //si i équivaut au choix de l'utilisateur
+                document.write('<p> Indice=' + indice + ' </p>'); //l’indice dans cet intervalle du nombre testé
+            } else { //Si i n'est pas égal au choix de l'utilisateur
+                indice++; //Incrémentation de l'indice
+            }
+        }
+
+    } while (!isNaN(prompt('Entrez un nombre pour continuer'))); //Recommencer le programme si OK
+</script>
