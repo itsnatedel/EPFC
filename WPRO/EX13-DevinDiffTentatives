@@ -1,0 +1,45 @@
+<script>
+    /**
+     * Le Devin: programme qui permet à l'utilisateur
+     * de deviner un nombre compris entre 0 et 10.
+     * Le nombre est un entier généré aléatoirement.
+     * L'utilisateur a droit à plusieurs tentatives.
+     * 13) Compter le nombre de tentatives,
+     * le nombre de propositions supérieures 
+     * et le nombre de propositions inférieures au nombre à deviner.
+     * 
+     * @author N. Deltour <nathandeltour2@gmail.com>
+     * @version 0.1
+     */
+
+    //Déclaration des variables, constantes et fonctions
+    var nbHazard, nbUser, infNb = 0, supNb = 0, tentative = 0;
+    const MAX = 10;
+
+    //Générer le nombre aléatoire nbHazard compris entre 0 et MAX(10)
+    nbHazard = Math.round(Math.random() * MAX);
+
+    do {
+        do {
+            nbUser = parseInt(prompt('Votre nombre?')); //Demande d'un nombre entier
+        } while (isNaN(nbUser)); //Redemander tant que ce n'est pas un nombre
+
+        if (nbUser == nbHazard) { //Si le nombre de l'utilisateur équivaut le nombre généré
+            document.write('<p style="color:green">Bravo!</p>'); //Couleur verte, bravo!
+            break; //Termine la boucle
+        } else {
+            document.write('<p style="color:red">Perdu!</p>'); //Couleur rouge, perdu!
+            tentative++; //Incrémentation du nombre de tentatives
+            
+            if (nbUser > nbHazard) { //Si le nombre de l'utilisateur est plus grand que le nombre généré
+                supNb++; //Incrémentation du total des nombres supérieurs au nombre généré
+            } else if (nbUser < nbHazard) { //Si le nombre de l'utilisateur est plus petit que le nombre généré
+                infNb++; //Incrémentation du total des nombres inférieurs au nombre généré
+            }
+        }
+    } while (confirm('Autre tentative?'));
+
+    document.write('<p>Vous avez essayé ' + tentative + ' fois avant de trouver le nombre mystère.</p>'); //Ecriture du nombre de tentatives
+    document.write('<p>Vous avez ' + infNb + ' tentative(s) en dessous du nombre mystère..</p>'); //Nombre de tentatives inférieures au nombre généré
+    document.write('<p>Vous avez ' + supNb + ' tentative(s) au dessus du nombre mystère..</p>'); //Nombre de tentatives supérieures au nombre généré
+</script>
