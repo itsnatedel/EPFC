@@ -1,0 +1,27 @@
+<script>
+    /* Comptage séléctif
+    * Lire des notes. 
+    * b)Compter le nombre de notes comprises entre 5 et 15.
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    //Déclaration des variables
+    var note, listeNotes = '', compteurNote = 0;
+
+    do {
+        do {
+            note = parseFloat(prompt('Entrez votre note!'));
+        } while (note < 0 || isNaN(note)); //On recommence tant que la note est négative ou pas un nombre
+
+        listeNotes += (note + ' '); //On stocke les notes dans une liste
+
+        if (note >= 5 && note <= 15) { //Si la note est comprise dans l'intervalle [5;15]
+            compteurNote++; //On incrémente le compteur de notes 
+        }
+    } while (confirm('Voulez-vous recommencer?'));
+
+    document.write('<p>Vos notes sont: ' + listeNotes + '</p>'); //On écrit les notes entrées par l'utilisateur
+    document.write('<p>Le nombre de notes comprises entre 5 et 15 s\'élève à: ' + compteurNote + '</p>'); //On affiche le compteur de notes entre 5 et 15
+</script>
