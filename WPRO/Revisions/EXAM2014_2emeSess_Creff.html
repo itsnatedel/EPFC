@@ -1,0 +1,69 @@
+<html>
+<script>
+    /* Programme qui calcule et affiche le poids idéal théorique d'un internaute en se basant sur la formule de Creff
+    * L'utilisateur entrera un par un au clavier son prénom, sa taille, son âge et sa morphologie.
+    * En fonction de la morphologie, il faudra appliquer la bonne formule pour calculer le poids idéal théorique.
+    * Formules de Creff:
+    *   Large = [Taille (en cm) - 100 + Age (en années) / 10] * 0,9 * 1,1
+    *   Normale = [Taille (en cm) - 100 + Age (en années) / 10] * 0,9
+    *   Fine = [Taille (en cm) - 100 + Age (en années) / 10] * 0,9 * 0,9
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var poidsIdeal, poids, prenom, taille, age, morphologie;
+    var surpoids = false; //Variable booléenne initialisée à false
+
+    do {
+        prenom = prompt('Bonjour, comment vous appelez-vous?'); //Demande du prénom
+    } while (!isNaN(prenom)); //On recommence tant que le prénom est un nombre
+
+    do {
+        age = parseInt(prompt('Votre age?')); //Demande de l'âge
+    } while (isNaN(age) || age > 130 || age < 0); //On recommence si l'âge n'est pas un nombre, plus grand que 130 ou négatif
+
+    do {
+        taille = parseInt(prompt('Votre taille? (en cm)')); //Demande de la taille
+    } while (isNaN(taille) || taille > 250 || taille < 100); //On recommence si la taille n'est pas un nombre, plus grand que 250 ou plus petit que 100
+
+    do {
+        poids = parseFloat(prompt('Votre poids?')); //Demande du poids
+    } while (isNaN(poids) || poids < 0); //On recommence si le poids n'est pas un nombre ou négatif
+    do {
+        morphologie = prompt('Quelle est votre morphologie? Large, normale ou fine'); //Demande de la morphologie
+    } while (!isNaN(morphologie)); //On recommence si la morphologie est un nombre
+
+    switch (morphologie) { //Switch case pour déduire la formule de Creff
+        case "large": //Si la morphologie est large
+            poidsIdeal = (taille - 100 + age / 10) * 0.9 * 1.1; //Calcul du poids idéal selon une des formules de Creff
+            break;
+
+        case "normale": //Si la morphologie est normale
+            poidsIdeal = (taille - 100 + age / 10) * 0.9;
+            break;
+
+        case "fine": //Si la morphologie est fine
+            poidsIdeal = (taille - 100 + age / 10) * 0.9 * 0.9;
+            break;
+
+        default: //Si aucune condition n'est remplie
+            alert('Vous n\'avez entré aucune morphologie.. Le programme s\'arrête.')
+            break;
+    }
+    
+    if (poidsIdeal < poids) { //Condition pour définir sur la personne est en surpoids ou non
+        surpoids = true; //Si oui, la variable booléenne sera true
+    }
+
+//Affichage final
+    if(surpoids){ //Si la variable booléenne surpoids est true
+        document.write('<p>'+prenom+ ', votre poids idéal est ' +poidsIdeal.toFixed(2)+'</p>'); //toFixed(n) réduit le nombre de décimales à n
+        document.write('<p>Vous êtes en surpoids!</p>');
+    } else { //Si la variable booléenne surpoids est false
+        document.write('<p>'+prenom+ ', votre poids idéal est ' +poidsIdeal.toFixed(2)+'</p>');
+        document.write('<p>Tout va bien.</p>');
+    }
+</script>
+
+</html>
