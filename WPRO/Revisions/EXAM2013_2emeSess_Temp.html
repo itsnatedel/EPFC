@@ -1,0 +1,36 @@
+<html>
+<script>
+    /* Programme qui convertit une température exprimée en degré Celsius en une température en degré Fahrenheit, et vice-versa. 
+    * L'utilisateur entrera un par un au clavier:
+    *    • la température, un nombre réel compris entre -9999 et 9999,
+    •    • L'unité de mesure correspondante en tapant C ou F en majuscule.
+    * °F to °C	Soustraire 32, puis multiplier par 5, puis diviser 9
+    * °C to °F	multiplier par 9, puis diviser par 5, puis ajouter 32
+    * @author N.Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+    var temp, type='', tempC, tempF;
+
+    do {
+        do {
+            temp = parseFloat(prompt('Quel température fait-il?'));
+        } while ((temp > 9999) || (temp < -9999) || isNaN(temp));
+
+        do{
+            type = prompt('Quelle unité de mesure? Celsius (C) ou Farenheit (F) ?');
+        } while (!isNaN(type));
+
+        if (type=="F") {
+            tempC = ((temp - 32) * 5) / 9; //Voir commentaire ligne 8
+            document.write('<p>' + temp + ' °F correspond à ' + tempC + ' °C</p>');
+        } else if (type=="C") {
+            tempF = ((temp * 9) / 5) + 32; //Voir commentaire ligne 7
+            document.write('<p>' + temp + ' °C correspond à ' + tempF + ' °F</p>');
+        } else {
+            alert('Aucune unité de mesure, le programme s\'arrête.');
+        }
+
+    } while (confirm('Voulez-vous recommencer?'));
+
+</script>
+</html>
