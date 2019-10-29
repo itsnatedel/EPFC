@@ -1,0 +1,82 @@
+<html>
+<script>
+    /* Programme qui calcule et affiche le montant à payer pour la réservation de ses deux chambres.
+    * L'utilisateur entrera un par un au clavier le nombre de nuits du séjour.
+    * Il devra ensuite indiquer s'il désire réserver la chambre principale pour 1 ou 2 personnes.
+    * Il devra indiquer s'il désire réserver la seconde chambre.
+    * Dans ce cas, il devra préciser si elle est destinée  à un adulte ou à un enfant.
+    * 
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var montantAdulte, montantEnfant, nbNuit, nbAdulte, ageEnfant, typePersonne, montantTotal;
+    var secondeChambre = false, troisAns = false; //Variables booléennes initialisées à false
+
+    do {
+        nbAdulte = parseInt(prompt('Combien d\'adulte(s)? (max. 2 adultes)')); //Demande du nombre d'adulte
+    } while (isNaN(nbAdulte) || nbAdulte < 0 || nbAdulte > 2); //On recommence tant que ce n'est pas un nombre, si c'est négatif ou plus grand que 2
+
+    if (nbAdulte == 2) { //Si le nombre d'adulte équivaut à 2
+        montantAdulte = 100; //Montant pour deux personnes
+    } else {
+        montantAdulte = 90; //Montant pour une personne
+    }
+
+    do {
+        nbNuit = parseInt(prompt('Combien de nuits?')); //Demande du nombre de nuit
+    } while (isNaN(nbNuit) || nbNuit < 0); //On recommence tant que ce n'est pas un nombre ou un nombre négatif
+
+
+    secondeChambre = (confirm('Voulez-vous une deuxième chambre?')); //Confirmation d'une deuxième chambre, si OK => SecondeChambre = true
+
+    if (secondeChambre) { //Si secondeChambre = true
+        typePersonne = prompt('Qui occupera la deuxième chambre? Adulte (A) ou enfant (E)'); //Demande du type de personne (Adulte ou Enfant)
+    }
+
+    switch (typePersonne) { //Switch case qui permet de définir le type de personne
+        case "A": //Si c'est un adulte
+            montantTotal = (montantAdulte + 50) * nbNuit; //Calcul du prix total en tenant compte de la deuxième chambre
+            break;
+
+        case "E": //Si c'est un enfant
+            troisAns = (confirm('L\'enfant a-t-il plus de 3ans?')); //Confirmation que l'enfant est plus  âgé que 3ans. Si OK => troisAns = true
+            if (troisAns) { //Si troisAns=true
+                montantEnfant = 25; //Tarif enfant de plus de 3ans
+                montantTotal = (montantAdulte + montantEnfant) * nbNuit; //Calcul du prix en tenant compte de l'enfant
+            } else {
+                montantEnfant = 0; //Aucun tarif spécifié si l'enfant est âgé de moins de 3ans
+                montantTotal = (montantAdulte + montantEnfant) * nbNuit; //Calcul du prix en tenant compte de l'enfant
+            }
+            break;
+        default: //Si aucune lettre/type de personne n'est spécifié
+            montantTotal = montantAdulte * nbNuit; //Calcul du prix normal
+    }
+
+    //Affichage final
+    if (nbNuit > 1) { //Si le nombre de nuit est supérieur à 1
+        document.write('<p>Réservation: ' + nbNuit + ' nuits</p>'); //Ecrire nuit au pluriel
+    } else { //Si le nombre de nuit est égal à 1
+        document.write('<p>Réservation: ' + nbNuit + ' nuit</p>');
+    }
+
+    if (nbAdulte > 1) { //Si le nombre d'adulte est supérieur à 1
+        document.write('<p>- Chambre 1: ' + nbAdulte + ' adultes</p>'); //Ecrire adulte au pluriel
+    } else { //Si le nombre d'adulte est égal à 1
+        document.write('<p>- Chambre 1: ' + nbAdulte + ' adulte</p>');
+    }
+
+    if (secondeChambre) { //Si secondeChambre=true
+        if (typePersonne == "A") { //Si le type de personne est un adulte
+            document.write('<p>- Chambre 2: 1 adulte</p>');
+        } else if (typePersonne == "E") { //Si le type de personne est un enfant
+            document.write('<p>- Chambre 2: 1 enfant</p>');
+        }
+    } else { //Si secondeChambre=false
+        montantTotal = montantAdulte * nbNuit;
+        document.write('<p>- Chambre 2: 0 adulte</p>');
+    }
+
+    document.write('<p>=> ' + montantTotal + ' €'); //Affichage du prix total
+</script>
+</html>
