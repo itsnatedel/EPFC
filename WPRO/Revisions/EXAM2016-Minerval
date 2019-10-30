@@ -1,0 +1,120 @@
+<html>
+<script>
+
+    /* Programme qui calcule et affiche le montant du minerval pour ses formations.
+    * L'utilisateur entrera au clavier le numéro de la formation choisie parmi une liste prédéfinie.
+    *
+    * 1050 Access       40 p.
+    * 1060 Excel        40 p.
+    * 1065 Excel Avancé 60 p.
+    * 3040 Joomla       80 p.
+    *
+    * Il indiquera ensuite s’il est ressortissant d’un pays hors Union européenne ou non et s’il est un membre du personnel. 
+    * Il devra ensuite indiquer s'il désire afficher le détail du tarif calculé ou seulement le total. 
+    *
+    * Calcul du prix:
+    * prix = 25 € (participation) + (0.35€/p)
+    * Hors U.E. : prix + (0.75€/p) 
+    * Exemptés de participation: membres du personnels de l'ULB ou de l'EPFC (=> enfants et conjoints aussi).
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+    var numFormation, minerval, periode, formation, coutInscription, coutSpecial;
+    var horsUnion = false, membrePersonnel = false, showDetail = false; //Initialisation des détails supplémentaires
+
+    //Initialisation de constantes (on utilise des constantes car ces valeurs ne changeront jamais)
+    const PARTICIPATION = 25;
+
+    const CODE_FORMATION_ACCESS = "1050";
+    const TITRE_FORMATION_ACCESS = "Access";
+    const PERIODE_FORMATION_ACCESS = "40";
+
+    const CODE_FORMATION_EXCEL = "1060";
+    const TITRE_FORMATION_EXCEL = "Excel";
+    const PERIODE_FORMATION_EXCEL = "40";
+
+    const CODE_FORMATION_EXCEL_AVANCE = "1065";
+    const TITRE_FORMATION_EXCEL_AVANCE = "Excel Avancé";
+    const PERIODE_FORMATION_EXCEL_AVANCE = "60";
+
+    const CODE_FORMATION_JOOMLA = "3040";
+    const TITRE_FORMATION_JOOMLA = "Joomla";
+    const PERIODE_FORMATION_JOOMLA = "80";
+
+
+    do {
+        do {
+            numFormation = prompt('Veuillez entrer le numéro de formation.'); //Demande du code de formation
+        } while (isNaN(numFormation) || numFormation == '' || numFormation.length != 4); //Si le conde n'est pas un nombre, chaine vide ou n'a pas 4 chiffres
+
+        //Déterminer la formation
+        switch (numFormation) {
+            case "1050":
+                formation = TITRE_FORMATION_ACCESS;
+                periode = PERIODE_FORMATION_ACCESS;
+                break;
+
+            case "1060":
+                formation = TITRE_FORMATION_EXCEL;
+                periode = PERIODE_FORMATION_EXCEL;
+                break;
+
+            case "1065":
+                formation = TITRE_FORMATION_EXCEL_AVANCE;
+                periode = PERIODE_FORMATION_EXCEL_AVANCE;
+                break;
+
+            case "3040":
+                formation = TITRE_FORMATION_JOOMLA;
+                periode = PERIODE_FORMATION_JOOMLA;
+                break;
+
+            default:
+                numFormation = undefined;
+                periode = 0;
+        }
+
+        //Ressortissant U.E.
+        horsUnion = confirm('Etes-vous ressortissant de l\'Union Européenne?');
+
+        //Membre personnel
+        membrePersonnel = confirm('Etes-vous membre du personnel de l\'ULB ou de l\'EPFC (conjoint et/ou enfant d\'un membre)?');
+
+        //showDetail
+        showDetail = confirm('Voulez-vous les détails tarifaires??');
+
+        //Calcul du prix de base
+        coutInscription = periode * 0.35;
+
+        if (horsUnion) { //Si horsUnion=true
+            coutSpecial = periode * 0.75; //Calcul du minerval étranger
+            if (coutSpecial > 238) { //Si le coutSpecial éxcède 238
+                coutSpecial = 238;
+            }
+        } else {
+            coutSpecial = 0;
+        }
+
+        if (membrePersonnel) { //Si membrePersonnel=true
+            minerval = coutInscription + coutSpecial;
+        } else {
+            minerval = PARTICIPATION + coutInscription + coutSpecial;
+        }
+
+        //Affichage du resultat
+        if (numFormation != undefined) { //Si le code de formation est correct/existant
+            document.write('<p>Formation: ' + formation + '</p>');
+            document.write('<p>Tarif: ' + minerval + ' €</p>');
+            if (showDetail) { //Si l'utilisateur a décidé d'afficher les détails
+                document.write('<p>- Participation : ' + PARTICIPATION + ' €');
+                document.write('<p>- Inscription : ' + coutInscription + ' €</p>');
+                document.write('<p>- Frais Hors E.U. : ' + coutSpecial + ' €</p>');
+            }
+        } else {
+            document.write('<p>Code de formation inconnu !</p>');
+        }
+    } while (confirm('Voulez-vous réessayer?'));
+</script>
+
+</html>
