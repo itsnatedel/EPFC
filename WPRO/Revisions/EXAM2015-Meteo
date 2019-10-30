@@ -1,0 +1,54 @@
+<html>
+<meta charset="utf-8" />
+<script>
+    /*
+     * Calcul et affichage de la variation du niveau d'acidité de l'eau de pluie
+     * entre les relevés du jour et de la veille.
+     * Affichage éventuel du type de Ph (Acide/Neutre/Alcalin)
+     *
+     * @author N. Deltour
+     * @version 0.1
+     */
+    //Déclaration des variables
+    var phVeille, phJour, variation, type;
+    var avecType = false;
+
+    do {
+        
+        do {
+            phVeille = parseFloat(prompt('Quel était le Ph d\'hier?')); //Demande du Ph de la veille
+        } while (isNaN(phVeille) || phVeille < 0 || phVeille > 14);
+
+        do {
+            phJour = parseFloat(prompt('Quel est le Ph d\'aujourd\'hui?')); //Demande du Ph d'aujourd'hui
+        } while (isNaN(phJour) || phJour < 0 || phJour > 14);
+
+        avecType = confirm('Voulez-vous afficher le type de Ph du jour?'); //Confirmation de l'affichage du type de Ph. Si OK => avecType=true
+        
+        variation = (phJour - phVeille) / phVeille * 100; //Calcul de la variation des Ph
+
+        if (avecType) { //Déduction du type
+            if (phJour < 5) { //Si Ph >0 && <5
+                type = 'Acide';
+            } else if (phJour > 10) { //Si Ph >10 && <=14
+                type = 'Alcalin';
+            } else { //Si ph >=5 && <=10
+                type = 'Neutre';
+            }
+        }
+
+        //Affichage des données
+        document.write('<p>Veille: ' + phVeille + '</p>');
+
+        if (avecType) { //Si avecType est true
+            document.write('<p>Aujourd\'hui: ' + phJour + ' (' + type + ')</p>');
+        } else {
+            document.write('<p>Aujourd\'hui: ' + phJour + '</p>');
+        }
+
+        document.write('<p>=> ' + variation + '%</p>');
+
+    } while (confirm('Voulez-vous recommencer?'));
+</script>
+
+</html>
