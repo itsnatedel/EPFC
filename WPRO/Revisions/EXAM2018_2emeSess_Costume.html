@@ -1,0 +1,86 @@
+<html>
+<script>
+    /* Programme qui permet de calculer le prix des locations
+    * L’utilisateur pourra choisir le costume, définir le nombre de jours de location, 
+    * choisir l’option nettoyage et afficher le prix total détaillé ou pas. 
+    *
+    * L'utilisateur entre au clavier le code du costume choisi => Afficher nom et le prix du costume
+    * L’utilisateur entre le nombre de jours de location
+    * Si l’utilisateur désire l’option nettoyage, le programme calcule et affiche le montant détaillé à payer 
+    * sous le format : « Total: 70 * 2 + 20 = 160 € ». 
+    * Sinon, « Total: 140 € » 
+    * Liste de costumes:   
+    * 3PS   Costume 3 pièces                85€/j 
+    * PIR   Déguisement de pirate           70€/j
+    * REI   Déguisement Reine des neiges    90€/j
+    * Option nettoyage : 20 €.
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var nbJoursLoca, codeCostume, prixCostume, prixLocation;
+    var nettoyage = false, detail = false;
+
+    //Définition des constantes
+    const NOM_COSTUME_3PS = "Costume 3 pièces";
+
+    const NOM_COSTUME_PIR = "Déguisement de pirate";
+
+    const NOM_COSTUME_REI = "Déguisement Reine des neiges";
+
+    const PRIX_NETTOYAGE = 20;
+
+    do {
+        do {
+            codeCostume = prompt('Entrez le code du costume. 3Pièces (3PS), Pirate (PIR), Reine (REI)'); //Demande du code du costume
+        } while (!isNaN(codeCostume) || codeCostume.length != 3);
+
+        switch (codeCostume) { //Switch case pour déterminer le costume et son prix
+            case "3PS":
+                prixCostume = 85;
+                document.write('<p>Votre costume est : ' + NOM_COSTUME_3PS + ', son prix est de ' + prixCostume + ' €/jour.</p>');
+                break;
+
+            case "PIR":
+                prixCostume = 70;
+                document.write('<p>Votre costume est : ' + NOM_COSTUME_PIR + ', son prix est de ' + prixCostume + ' €/jour.</p>');
+                break;
+
+            case "REI":
+                prixCostume = 90;
+                document.write('<p>Votre costume est : ' + NOM_COSTUME_REI + ', son prix est de ' + prixCostume + ' €/jour.</p>');
+                break;
+
+            default:
+                alert('Le code n\'est pas valide.');
+        }
+
+        do {
+            nbJoursLoca = parseInt(prompt('Combien de jours voulez-vous louer le costume? (max 5 jours)')); //Demande du nombre de jours de location
+        } while (isNaN(nbJoursLoca) || nbJoursLoca < 0 || nbJoursLoca > 5);
+
+        prixLocation = prixCostume * nbJoursLoca; //Calcul du prix de location
+
+        nettoyage = confirm('Voulez-vous l\'option Nettoyage? (20€)'); //Demande de l'option Nettoyage
+        detail = confirm('Voulez-vous afficher les détails tarifaires?'); //Demande pour afficher les détails tarifaires
+
+        if (!detail) { //Si detail=false
+            if (nettoyage) { //Si nettoyage=true
+                document.write('<p>Total: ' + (prixLocation + PRIX_NETTOYAGE) + ' €</p>'); //Ajout du montant pour le nettoyage au prix de la location
+            } else {
+                document.write('<p>Total: ' + prixLocation + ' €</p>');
+            }
+        } else { //Si detail=true
+            if (nettoyage) { //Si nettoyage=true
+                document.write('<p>Total: </p>');
+                document.write('<p>' + prixCostume + ' * ' + nbJoursLoca + ' + ' + PRIX_NETTOYAGE + ' = ' + (prixLocation + PRIX_NETTOYAGE) + ' €</p>');
+            } else { //Si nettoyage=false
+                document.write('<p>Total: </p>');
+                document.write('<p>' + prixCostume + ' * ' + nbJoursLoca + ' = ' + prixLocation + ' €</p>');
+            }
+        }
+    } while (confirm('Voulez-vous recommencer?'));
+</script>
+
+</html>
