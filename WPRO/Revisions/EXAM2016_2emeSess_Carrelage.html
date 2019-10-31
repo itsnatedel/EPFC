@@ -1,0 +1,78 @@
+<html>
+<script>
+    /* Programme qui calcule et affiche en m² la superficie de mur que l’on peut carreler avec des paquets de 50 carreaux identiques.
+    *
+    *  L'utilisateur entrera au clavier en centimètre la longueur et la largeur d’un carreau. 
+    *  Il indiquera ensuite le nombre de paquets qu’il souhaite acheter.
+    *  Il devra ensuite indiquer s'il désire un calcul avancé, à savoir avec retrait du pourcentage de déchet de coupe.
+    *  La longueur et la largeur d’un carreau ne dépassent pas 50 cm
+    *  Afficher au terme du traitement la surface totale de mur et éventuellement le détail du calcul avancé.
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var longueurCarreau, largeurCarreau, nbPaquet, surface, surfaceTotale, perte, nbCarreauxPerdus, nbCasse, surfaceM2, surfaceTotaleM2;
+    var calculAvance = false;
+
+    do {
+        //Demande des dimensions
+        do {
+            longueurCarreau = parseInt(prompt('Entrez la longueur du carreau en cm (max 50cm)'));
+        } while (isNaN(longueurCarreau) || longueurCarreau < 0 || longueurCarreau > 50);
+
+        do {
+            largeurCarreau = parseInt(prompt('Entrez la largeur du carreau en cm (max 50cm)'));
+        } while (isNaN(largeurCarreau) || largeurCarreau < 0 || largeurCarreau > 50);
+
+        //Demande du nombre de paquets
+        do {
+            nbPaquet = parseInt(prompt('Combien de paquets voulez-vous acheter?'));
+        } while (isNaN(nbPaquet) || nbPaquet < 0);
+
+        //Cacul de la surface !!Un paquet = 50 carreaux identiques
+        surface = (longueurCarreau * largeurCarreau) * (nbPaquet * 50); //=> en cm² 
+
+        //Calcul des déchets
+        if (surface > 20000) {  //Si la surface excède 20m²
+            nbCasse = 0.05; //5% de perte
+
+        } else {
+            nbCasse = 0.02; //2% de perte
+        }
+
+        //Calcul du nombre de carreaux perdus
+        perte = 50 - (50 * nbCasse);
+        nbCarreauxPerdus = 50 - perte;
+
+        //Calcul surface totale
+        surfaceTotale = surface - (surface * nbCasse); //=> en cm²
+
+        //Conversion cm² en m²
+        if (surface < 100000) {
+            surfaceM2 = surface / 10000;
+            surfaceTotaleM2 = surfaceTotale / 10000;
+        } else {
+            surfaceM2 = surface / 1000;
+            surfaceTotaleM2 = surfaceTotale / 1000;
+        }
+
+        //Demande détails du calcul
+        calculAvance = confirm('Voulez-vous voir les détails du calcul?');
+
+        //Affichage des résultats
+        document.write('<p>Nb paquets: ' + nbPaquet + '</p>');
+        document.write('<p>Dimensions: ' + longueurCarreau + 'x' + largeurCarreau + '</p>');
+        document.write('<p>Surface: ' + surfaceM2 + ' m²</p>');
+        if (calculAvance) { //Si calculAvance=true
+            if ((nbCarreauxPerdus * nbPaquet) < 2) { //Si il y a un seul carreau
+                document.write('<p>Déchet: ' + (nbCarreauxPerdus * nbPaquet) + ' carreau (' + (nbCasse * 100) + '%)</p>'); //Ecrire carreau au singulier
+            } else {
+                document.write('<p>Déchet: ' + (nbCarreauxPerdus * nbPaquet) + ' carreaux (' + (nbCasse * 100) + '%)</p>');
+            }
+            document.write('<p>==> Surface totale: ' + surfaceTotaleM2 + ' m²</p>');
+        }
+    } while (confirm('Voulez-vous recommencer?'));
+</script>
+
+</html>
