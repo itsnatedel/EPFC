@@ -1,0 +1,59 @@
+<html>
+<script>
+    /* Programme qui permet de calculer le budget buffet d’un mariage. 
+    * L’utilisateur pourra définir le nombre de couverts (adultes et enfants).
+    * Il pourra aussi choisir l’option bulles et afficher le prix total détaillé ou pas.
+    *  
+    * L'utilisateur entre au clavier le nombre d’adultes et d’enfants. 
+    * Le programme calcule et affiche le montant détaillé à payer pour les couverts
+    * Ensuite, le programme calcule et affiche le montant à payer pour les boissons (option bulles)
+    * Si l'user est ok, le programme affiche une facture détaillée (voir modèle ci-dessous).
+    * il peut y avoir aucun enfant mais au moins 10 adultes.
+    *
+    * Incertitude: "Option bulles : 50 € par tranche de 10 personnes."
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var prix, nbBulles, prixBulles, budgetTotal, nbAdulte, coutAdulte, nbEnfant, coutEnfant, nbPersonne, nbCouvert, montantBoissons;
+    var bulles = false;
+
+    do {
+        //Demande du nombre de personnes 
+        do {
+            nbAdulte = parseInt(prompt('Combien d\'adultes y aura-t-il?'));
+        } while (isNaN(nbAdulte) || nbAdulte < 0);
+
+        do {
+            nbEnfant = parseInt(prompt('Combien d\'enfants y aura-t-il?'));
+        } while (isNaN(nbEnfant) || nbEnfant < 0);
+
+        //Calcul 
+        coutAdulte = 15 * nbAdulte;
+        coutEnfant = 10 * nbEnfant;
+        nbPersonne = nbAdulte + nbEnfant;
+        prix = coutAdulte + coutEnfant;
+   
+        //Affichage du prix
+        document.write('<p>Total: ' + coutAdulte + ' + ' + coutEnfant + ' = ' + prix + ' €</p>');
+
+        //Demande de l'affichage de l'option Bulles
+        bulles = confirm('Voulez-vous l\'option bulles?');
+
+        if (bulles) { //Si Bulles=true
+            do {
+                nbBulles = parseInt(prompt('Combien de personnes veulent l\'option Bulles?')); //Demande du nombre de personnes prenant l'option Bulles
+            } while (isNaN(nbBulles) || nbBulles > nbPersonne || nbBulles < 0);
+            prixBulles = 50 * nbBulles; //Calcul montant Bulles
+            document.write('<p>• ' + nbAdulte + ' adultes (' + coutAdulte + ' €)</p>');
+            if (nbEnfant > 0) {
+                document.write('<p>• ' + nbEnfant + ' enfants (' + coutEnfant + ' €)</p>');
+            }
+            document.write('<p>• ' + nbBulles + ' x Bulles (' + prixBulles + ' €)</p>');
+            document.write('<p>Total: ' + (prix + prixBulles) + ' €</p>');
+        }
+    } while (confirm('Voulez-vous recommencer?'));
+</script>
+
+</html>
