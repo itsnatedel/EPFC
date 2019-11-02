@@ -1,3 +1,4 @@
+
 <html>
 <script>
 
@@ -87,7 +88,7 @@
         //Calcul du prix de base
         coutInscription = periode * 0.35;
 
-        if (horsUnion) { //Si horsUnion=true
+        if (!horsUnion) { //Si horsUnion=false
             coutSpecial = periode * 0.75; //Calcul du minerval étranger
             if (coutSpecial > 238) { //Si le coutSpecial éxcède 238
                 coutSpecial = 238;
@@ -112,7 +113,7 @@
                 document.write('<p>- Frais Hors E.U. : ' + coutSpecial + ' €</p>');
             }
         } else {
-            document.write('<p>Code de formation inconnu !</p>');
+            document.write('<p>Code de formation inconnu !</p>');
         }
     } while (confirm('Voulez-vous réessayer?'));
 </script>
