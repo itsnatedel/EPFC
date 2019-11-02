@@ -1,0 +1,93 @@
+<html>
+<script>
+    /* Programme qui permet de réserver des séances de coaching et qui calcule puis affiche le montant total à payer.
+    * Une séance de coaching coûte 10 €. 
+    * Il est possible d’obtenir deux types de réduction non cumulables (par quantité ou par code promotionnel).
+    * A partir de 5 séances, on bénéficie d’une réduction de 15% sur le montant total.
+    * 
+    * Déroulement du programme:
+    * L'utilisateur entre au clavier la quantité de séances désirée.
+    * Pour une quantité d’au moins 5 séances, le programme lui affiche qu’il a droit à la réduction de 15%. 
+    * Le programme lui demande ensuite s’il désire utiliser un code promo. 
+    * Si l’utilisateur refuse, le programme calcule le montant total en appliquant une éventuelle réduction de 15%.
+    * Dans le cas contraire, l’utilisateur entre son code promo.
+    * Puis le programme calcule le montant total en appliquant le pourcentage associé au code promo entré.
+    *
+    * @author N. Deltour <nathandeltour2@gmail.com>
+    * @version 0.1
+    */
+
+    var nbSeance, total, codePromo, reductionCode;
+    var reductionCodePromo = false, simpleReducSeance = false;
+
+    //Définition des constantes
+    const COUT_SEANCE = 10;
+    const SEUIL_SEANCE_REDUCTION = 5;
+    const REDUCTION_QUINZE = 0.15;
+
+    do {
+        do {
+            nbSeance = parseInt(prompt('Combien de séances désirez-vous?')); //Demande du nombre de séances
+        } while (isNaN(nbSeance) || nbSeance < 0);
+
+        if (nbSeance >= SEUIL_SEANCE_REDUCTION) { //Si le nombre de séances est supérieur ou égal à 5
+            simpleReducSeance = confirm('Voulez-vous une réduction de 15% sur le total de votre commande?'); //Confirmation si l'utilisateur souhaite les 15% de réduction
+        }
+
+        reductionCodePromo = confirm('Avez-vous un code promo?'); //Confirmation si l'utilisateur a un code promo
+
+        if (reductionCodePromo) { //Si reductionCodePromo=true
+            do {
+                codePromo = prompt('Entrez votre code promo'); //Demande du code promo
+            } while (!isNaN(codePromo)); //On recommence tant que  codePromo est un nombre
+
+            /* Switch case sur codePromo pour définir la reduction correspondante au code entré.
+               On utilise la fonction .toUpperCase() pour forcer en majuscule la chaîne de caractère entrée par l'utilisateur.
+               Ce qui nous évite d'avoir une erreur si l'utilisateur a mal copié son code promo dans le programme.
+               (sans .toUpperCase() => winter4life =/= Winter4Life =/= WINTER4LIFE) 
+               On peut aussi utiliser la fonction .toLowerCase() pour forcer la chaine de caractère en miniscule */
+            switch (codePromo.toUpperCase()) {
+                case "2SPRINGAS1":
+                    reductionCode = 0.15;
+                    total = (COUT_SEANCE * nbSeance) - ((COUT_SEANCE * nbSeance) * reductionCode);
+                    break;
+
+                case "WINTER4LIFE":
+                    reductionCode = 0.20;
+                    total = (COUT_SEANCE * nbSeance) - ((COUT_SEANCE * nbSeance) * reductionCode);
+                    break;
+
+                case "I8SUMMER":
+                    reductionCode = 0.25;
+                    total = (COUT_SEANCE * nbSeance) - ((COUT_SEANCE * nbSeance) * reductionCode);;
+                    break;
+
+                case "AUTUMN3":
+                    reductionCode = 0.30;
+                    total = (COUT_SEANCE * nbSeance) - ((COUT_SEANCE * nbSeance) * reductionCode);;
+                    break;
+
+                default: //Si le code entré par l'utilisateur est incorrect
+                    alert('Code promo invalide!');
+                    reductionCode = 0;
+                    total = COUT_SEANCE * nbSeance;
+            }
+        }
+
+        //Affichage du résultat
+        document.write('<p>Votre réservation:</p>');
+        document.write('<p>* ' + nbSeance + ' séances</p>');
+
+        if (simpleReducSeance) { //Si simpleReducSeance=true
+            total = (COUT_SEANCE * nbSeance) - ((COUT_SEANCE * nbSeance) * REDUCTION_QUINZE); //Calcul du total avec une réduction de 15% 
+            document.write('<p>=> Réduction -' + (REDUCTION_QUINZE * 100) + '%</p>'); //Affichage de la réduction de 15%
+        } else if (reductionCodePromo) { //Si reductionCodePromo
+            document.write('<p>=> Code promo (' + (reductionCode * 100) + '%)</p>'); //Affichage de la réduction du code promo entré
+        } else { //Si simpleReducSeance ET reductionCodePromo sont à false
+            total = COUT_SEANCE * nbSeance; //Calcul du prix sans aucune réduction
+        }
+        document.write('Total: ' + total + ' €</p>'); //Affichage du total 
+    } while (confirm('Voulez-vous recommencer?')) //Retry
+</script>
+
+</html>
