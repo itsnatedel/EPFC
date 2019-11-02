@@ -9,11 +9,11 @@
     * @author N.Deltour <nathandeltour2@gmail.com>
     * @version 0.1
     */
-    var temp, type='', tempC, tempF;
+    var temp, type, tempC, tempF;
 
     do {
         do {
-            temp = parseFloat(prompt('Quel température fait-il?'));
+            temp = parseFloat(prompt('Quelle température fait-il?'));
         } while ((temp > 9999) || (temp < -9999) || isNaN(temp));
 
         do{
