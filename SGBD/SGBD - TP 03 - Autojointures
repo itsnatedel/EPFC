@@ -1,0 +1,28 @@
+-- EX 1 --
+SELECT DISTINCT p.PNAME FROM p
+WHERE p.PNAME LIKE '%c%'
+
+-- EX 2 -- 
+SELECT DISTINCT p.PNAME from p
+where (p.WEIGHT*454) < 6000
+
+-- EX 3 --
+SELECT DISTINCT j.JNAME FROM j
+WHERE j.JNAME LIKE '%i%'
+
+-- EX 4 --
+SELECT s.SNAME FROM S
+WHERE s.SNAME LIKE 'A%' OR s.SNAME LIKE 'C%'
+
+-- EX 5 -- 
+SELECT ID_S, ID_P, ID_J from s, p, j
+WHERE s.CITY<>p.CITY OR j.CITY <> s.CITY OR p.CITY<>j.CITY
+
+-- EX 6 --
+SELECT DISTINCT spj.ID_P, spj2.ID_P, spj.ID_S FROM spj, spj spj2
+WHERE spj.ID_S=spj2.ID_S
+AND spj.ID_P>spj2.ID_P
+
+-- EX 7 -- 
+SELECT s.ID_S, s.CITY VILLE, p.ID_P, p.CITY VILLE , j.ID_J, j.CITY from s,p,j
+WHERE s.CITY<>p.CITY AND j.CITY <> s.CITY AND p.CITY<>j.CITY
