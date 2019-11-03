@@ -1,0 +1,61 @@
+FONCTIONS D'AGREGATION ET LEURS SYNTAXES:
+AVG(nom_de_colonne) retourne la moyenne de la colonne
+AVG(DISTINCT nom_de_colonne) retourne la moyenne des cellules différentes
+COUNT(* ou nom_de_colonne) retourne le nombre de lignes
+COUNT(DISTINCT nom_de_colonne) retourne le nombre de cellules différentes
+MIN(nom_de_colonne) retourne la valeur minimale d’une colonne
+MAX(nom_de_colonne) retourne la valeur maximale d’une colonne
+SUM(nom_de_colonne) retourne la somme d’une colonne.
+SUM(DISTINCT nom_de_colonne) retourne la somme des cellules de contenu différent.
+
+-----------
+
+-- EX 01 -- 
+
+-- Déterminez si les requêtes suivantes sont légales ou non. Expliquez pourquoi. --
+
+a) SELECT id_p, SUM(weight) FROM p GROUP BY color
+Correct, car le fait de grouper les couleurs renverra plusieurs groupements (3*rouge, 1*vert, 2*bleu)
+
+b)SELECT id_s, SUM(qty) FROM spj
+Incorrect, il y a plusieurs id_s pour plusieurs sommes. Faire la somme de toutes les qty n'est pas égal à un seul id_s
+
+c)SELECT id_p, weight FROM p GROUP BY id_p
+Correct, grouper par id_p renverra leurs poids respectifs.
+
+-----------
+
+-- EX 02 --
+
+1)Déterminez, par quantité, le nombre de livraisons effectuées
+SELECT count(spj.DATE_DERNIERE_LIVRAISON)Nombre_Livraisons, spj.QTY FROM spj 
+GROUP BY spj.QTY
+
+2)On souhaite connaître le nombre de livraisons de chaque fournisseur.
+SELECT count(spj.DATE_DERNIERE_LIVRAISON), spj.ID_S FROM spj 
+GROUP BY ID_S
+
+3)On veut connaître le nombre de pièces fournies par projet. On souhaite le nom du projet et non son identifiant.
+SELECT DISTINCT j.JNAME, SUM(spj.QTY) FROM spj
+JOIN j ON spj.ID_J=j.ID_J
+GROUP BY spj.ID_J
+
+4)On veut connaître le poids de chaque livraison. 
+SELECT spj.ID_S, spj.ID_P, spj.ID_J, MIN(spj.QTY*p.WEIGHT) FROM spj
+JOIN p ON spj.ID_P=p.ID_P
+GROUP BY spj.QTY
+
+5)On veut connaître le poids total des pièces livrées par projet.
+SELECT spj.ID_J, SUM(spj.QTY*p.WEIGHT) FROM spj 
+JOIN p ON spj.ID_P=p.ID_P 
+GROUP BY spj.ID_J 
+
+6)On veut connaître le poids de « la livraison la plus lourde ».
+SELECT MAX(spj.QTY*p.WEIGHT) Poids FROM spj
+JOIN p ON spj.ID_P=p.ID_P
+
+7) Pour chaque pièce fournie à un projet, obtenir le numéro de pièce, le numéro de projet et la 
+quantité totale fournie (de cette pièce à ce projet) dont l’intitulé sera « total ».
+SELECT ID_J, ID_P, SUM(qty) total
+FROM spj
+GROUP BY ID_P, ID_J
