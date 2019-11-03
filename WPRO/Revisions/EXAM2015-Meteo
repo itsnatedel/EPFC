@@ -9,12 +9,12 @@
      * @author N. Deltour
      * @version 0.1
      */
+     
     //Déclaration des variables
     var phVeille, phJour, variation, type;
     var avecType = false;
 
     do {
-        
         do {
             phVeille = parseFloat(prompt('Quel était le Ph d\'hier?')); //Demande du Ph de la veille
         } while (isNaN(phVeille) || phVeille < 0 || phVeille > 14);
@@ -47,8 +47,6 @@
         }
 
         document.write('<p>=> ' + variation + '%</p>');
-
     } while (confirm('Voulez-vous recommencer?'));
 </script>
-
 </html>
