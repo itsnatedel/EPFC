@@ -1,0 +1,68 @@
+-- CREATION DE LA BASE DE DONNEES --
+CREATE DATABASE cours2
+
+-- CREATION DE LA TABLE Personne --
+CREATE TABLE Personne (
+    	Id_personne INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	nom VARCHAR(30) NOT NULL
+);
+
+-- CREATION DE LA TABLE Professeur --
+CREATE TABLE Professeur ( 
+	Id_Prof INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	nom VARCHAR(30) NOT NULL 
+);
+
+-- CREATION DE LA TABLE Formation --
+CREATE TABLE Formation (
+    	Id_formation INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	cours VARCHAR(30) NOT NULL,
+    	titulaire INTEGER NOT NULL,
+    	FOREIGN KEY (titulaire)
+    		REFERENCES professeur(Id_Prof)
+);
+
+-- CREATION DE LA TABLE Suivre --
+CREATE TABLE Suivre (
+    	cours INTEGER NOT NULL PRIMARY KEY,
+    	stagiaire INTEGER NOT NULL PRIMARY KEY,
+    	FOREIGN KEY (cours)
+    		REFERENCES Formation(Id_formation),
+    	FOREIGN KEY (stagiaire)
+    		REFERENCES Personne(Id_personne)
+);
+
+-- REMPLIR LES TABLES -- //On ne spécifie pas la colonne Id_Personne car elle est auto-incrémentée.
+INSERT INTO Personne (nom) 
+VALUES ("Paul"),
+       ("Pierre"),
+       ("Jules");
+
+INSERT INTO Professeur (nom)
+VALUES ("ANDRE"),
+       ("JACQUES");
+
+INSERT INTO Formation (cours, titulaire)
+VALUES ("ANALYSE", 2),
+       ("SQL", 2),
+       ("COBOL", 1);
+
+INSERT INTO suivre (cours, stagiaire) 
+VALUES (1,2),
+       (1,3),
+       (2,2);
+
+
+-- EXERCICES SUPPLEMENTAIRES --
+
+-- CREATION D'UNE TABLE MOMENT --
+CREATE TABLE moment (
+	moment_actuel DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- INSERER UNE DONNE DANS LA TABLE MOMENT SANS PRECISER UNE VALEUR --
+INSERT INTO moment 
+VALUES ();
+
+-- RENOMMER UNE BASE DE DONNEES --
+>Dans l'interface PHPMYADMIN > Opérations > "Renommer la base de données en"
