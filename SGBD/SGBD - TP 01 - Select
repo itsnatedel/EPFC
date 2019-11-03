@@ -1,0 +1,32 @@
+-- EX 1 -- 
+SELECT *
+FROM s
+
+-- EX 2 --
+SELECT sname NOM, city VILLE
+FROM s
+
+-- EX 3 --
+SELECT sname
+FROM s
+WHERE city='London' OR city='Paris'
+
+-- EX 4 -- 
+SELECT sname
+FROM s
+WHERE status < 25 AND city='Paris'
+
+-- EX 5 -- 
+SELECT sname
+FROM s
+WHERE status NOT BETWEEN 15 AND 25
+
+-- EX 5 (autre solution) --
+SELECT sname
+FROM s
+WHERE status < 15 OR status >25
+
+-- EX 5  (autre solution) --
+SELECT sname
+FROM s
+WHERE NOT(status >= 15 AND status <= 25)
