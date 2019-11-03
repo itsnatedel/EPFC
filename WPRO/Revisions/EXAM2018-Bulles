@@ -47,6 +47,7 @@
             } while (isNaN(nbBulles) || nbBulles > nbPersonne || nbBulles < 0);
             prixBulles = 50 * nbBulles; //Calcul montant Bulles
             document.write('<p>• ' + nbAdulte + ' adultes (' + coutAdulte + ' €)</p>');
+            
             if (nbEnfant > 0) {
                 document.write('<p>• ' + nbEnfant + ' enfants (' + coutEnfant + ' €)</p>');
             }
@@ -55,5 +56,4 @@
         }
     } while (confirm('Voulez-vous recommencer?'));
 </script>
-
 </html>
