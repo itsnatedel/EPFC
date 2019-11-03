@@ -52,7 +52,6 @@
 
                 case 20:
                     do {
-                        
                         nbTicketChris += parseInt(prompt('Combien de ticket(s) désirez-vous?'));
                     } while (isNaN(nbTicketChris) || nbTicketChris < 0);
                     break;
@@ -76,17 +75,13 @@
         if (!showDetail) { //Si showDetail=false
             document.write('<p>Total : ' + prix + ' €</p>'); //Affichage simple
         } else {
-
             document.write('<p>Votre sélection:</p>');
-
             if (nbTicketGarland != 0) { //Si il y a au moins 1 ticket pour un concert
                 document.write('<p>• ' + nbTicketGarland + ' x ' + NOM_CONCERT_JEFFREYS + ' (' + PRIX_CONCERT_JEFFREYS + ' €)</p>');
             }
-
             if (nbTicketChris != 0) {
                 document.write('<p>• ' + nbTicketChris + ' x ' + NOM_CONCERT_CHRISTOPHE + ' (' + PRIX_CONCERT_CHRISTOPHE + ' €)</p>');
             }
-
             if (nbTicketJambinai != 0) {
                 document.write('<p>• ' + nbTicketJambinai + ' x ' + NOM_CONCERT_JAMBINAI + ' (' + PRIX_CONCERT_JAMBINAI + ' €)</p>');
             }
@@ -94,4 +89,5 @@
         }
     } while (confirm('Voulez-vous recommencer?')); //Retry
 </script>
+
 </html>
