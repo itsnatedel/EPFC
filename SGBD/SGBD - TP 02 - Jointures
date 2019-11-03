@@ -1,0 +1,45 @@
+-- EX 1 --
+SELECT spj.ID_P FROM spj spj, p p WHERE spj.ID_P=p.ID_P AND p.COLOR='RED'
+
+-- EX 2 --
+SELECT s.SNAME FROM s s JOIN spj ON spj.ID_S=s.ID_S WHERE spj.ID_P='P4'
+
+-- EX 3 --
+SELECT DISTINCT j.JNAME FROM j JOIN spj ON spj.ID_J=j.ID_J WHERE spj.ID_P='P3'
+
+-- EX 4 --
+SELECT j.JNAME from j JOIN spj ON spj.ID_J=j.ID_J where spj.ID_S='S1'
+
+-- EX 5 --
+SELECT DISTINCT s.SNAME from s JOIN spj ON spj.ID_S=s.ID_S where spj.QTY BETWEEN 150 AND 250
+
+-- EX 6 --
+select s.SNAME NOM, p.PNAME PIECE, j.JNAME PROJET, spj.QTY QUANTITE FROM spj 
+JOIN s ON spj.ID_S=s.ID_S 
+JOIN p ON spj.ID_P=p.ID_P 
+JOIN j ON spj.ID_J=j.ID_J
+
+-- EX 7 --
+select s.SNAME NOM, p.PNAME PIECE, j.JNAME PROJET, spj.QTY QUANTITE FROM spj 
+JOIN s ON spj.ID_S=s.ID_S 
+JOIN p ON spj.ID_P=p.ID_P 
+JOIN j ON spj.ID_J=j.ID_J 
+WHERE s.CITY='Paris'
+
+-- EX 8 --
+SELECT DISTINCT j.CITY FROM j 
+JOIN spj ON spj.ID_J=j.ID_J 
+JOIN s ON spj.ID_S=s.ID_S 
+WHERE s.SNAME='ADAMS'
+
+-- EX 9 --
+SELECT p.PNAME FROM p
+JOIN spj ON spj.ID_P=p.ID_P
+JOIN s on spj.ID_S=s.ID_S
+WHERE (p.WEIGHT<18) AND (s.CITY='Rome' OR s.CITY='London')
+
+-- EX 10 --
+SELECT DISTINCT p.ID_P FROM p 
+JOIN spj ON spj.ID_P=p.ID_P 
+JOIN s on spj.ID_S=s.ID_S 
+WHERE s.CITY='London'
