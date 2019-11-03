@@ -1,0 +1,98 @@
+-- TABLE FACEBOOK --
+
+-- EX 01 --
+SELECT p.Nom FROM personne p
+WHERE p.Age>30
+
+-- EX 02 --
+SELECT p.Nom FROM personne p
+WHERE p.Sexe="F" AND p.Age<30
+
+-- EX 03 -- 
+SELECT m.ID_Message FROM message m
+WHERE m.Expediteur="P1"
+
+-- EX 04 -- 
+SELECT p.Nom from personne p
+WHERE p.Sexe="M"
+ORDER BY p.Nom
+
+-- EX 05 --
+SELECT m.Contenu FROM message m
+JOIN personne p ON p.SSN=m.Expediteur
+WHERE p.Sexe="M"
+
+-- EX 06 --
+SELECT p.Nom FROM personne p
+JOIN destinataires d ON d.Destinataire=p.SSN
+WHERE d.ID_Message="M4"
+
+-- EX 07 --
+SELECT DISTINCT m.Contenu FROM message m
+JOIN destinataires d ON d.ID_Message=m.ID_Message
+JOIN personne p ON p.SSN=d.Destinataire
+WHERE p.Sexe="F" AND p.Age<30
+
+-- EX 08 --
+SELECT p.Nom FROM personne p 
+JOIN estami ea ON ea.SSN1=p.SSN
+WHERE ea.SSN2="P1"
+
+-- EX 09 -- 
+SELECT m.Contenu FROM message m
+JOIN personne p ON p.SSN=m.Expediteur
+WHERE p.Nom LIKE "%e%"
+
+-- EX 10 --
+SELECT m.Date_Expedition FROM message m
+JOIN destinataires d ON d.ID_Message=m.ID_Message
+JOIN personne p ON p.SSN=d.Destinataire
+WHERE p.Sexe="F" AND p.Nom LIKE "M%"
+
+-- EX 11 --
+SELECT m.Contenu FROM message m
+JOIN personne p ON p.SSN=m.Expediteur
+WHERE p.Sexe="M" AND p.Nom LIKE "_a%"
+
+-- EX 12 --
+SELECT p.Nom FROM personne p
+JOIN message m ON m.Expediteur=p.SSN
+JOIN destinataires d ON d.ID_Message=m.ID_Message
+WHERE p.Age<18
+
+-- EX 13 --
+SELECT DISTINCT ea.SSN1 FROM estami ea
+JOIN estami ea2 ON ea2.SSN1=ea.SSN2
+WHERE ea2.SSN2="P1"
+
+-- EX 14 --
+SELECT DISTINCT ea.SSN1 FROM estami ea
+JOIN estami ea2 ON ea2.SSN1=ea.SSN2
+JOIN personne p ON p.SSN=ea2.SSN2
+WHERE p.Nom="Xavier"
+
+-- EX 15 --
+-- TOUS LES COUPLES POSSIBLES -- 
+SELECT DISTINCT p.SSN, p2.SSN FROM personne p, personne p2
+WHERE p.Sexe="M" AND p2.Sexe="F"
+
+-- COUPLES EN TENANT COMPTE DES AMITIES --
+SELECT DISTINCT p.SSN, p2.SSN FROM personne p
+JOIN personne p2
+JOIN estami ea ON ea.SSN1=p2.SSN AND ea.SSN2=p.SSN
+WHERE p.Sexe="M" AND p2.Sexe="F"
+
+-- EX 16 --
+-- TOUS LES COUPLES POSSIBLES, ORDONNÉS PAR LA SOMME DE LEUR AGES --
+SELECT DISTINCT p.SSN, p2.SSN FROM personne p, personne p2
+WHERE p.Sexe="M" AND p2.Sexe="F"
+ORDER BY (p.Age+p2.Age)
+
+-- COUPLES EN TENANT COMPTE DES AMITIES ET ORDONNÉS PAR LA SOMME DE LEUR AGES --
+SELECT P1.Nom, P2.Nom
+FROM Personne p, Personne p2, EstAmi ea
+WHERE ea.SSN1 = p.SSN
+AND ea.SSN2 = p2.SSN
+AND p1.Sexe = "M"
+AND p2.Sexe = "F"
+ORDER BY (p.Age + p2.Age)
