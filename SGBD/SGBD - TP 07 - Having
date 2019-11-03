@@ -1,0 +1,38 @@
+1)Obtenir les projets d’Athens qui ont utilisé au total plus de 1000 pièces
+
+SELECT j.ID_J, sum(spj.QTY) as SUM FROM j 
+JOIN spj ON spj.ID_J=j.ID_J 
+WHERE j.CITY="Athens" 
+GROUP BY j.ID_J 
+HAVING SUM(spj.QTY)>1000 
+
+2)On souhaite obtenir l’identifiant des pièces et l’identifiant des projets lorsque la moyenne des quantités livrées (de
+cette pièce à ce projet) est supérieure à 320
+
+SELECT spj.ID_P, spj.ID_J FROM spj 
+GROUP BY spj.ID_P, spj.ID_J 
+HAVING avg(spj.QTY)>320 
+
+3)On souhaite obtenir l’identifiant des fournisseurs qui ont livré la même pièce à au moins trois projets différents.
+
+SELECT spj.ID_S FROM spj 
+GROUP BY spj.ID_S, spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_J)>=3
+
+4)On souhaite obtenir les pièces qui ont été livrées par au moins deux fournisseurs différents
+
+SELECT spj.ID_P FROM spj
+GROUP BY spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_S)>=2
+
+5)On souhaite obtenir les pièces qui ont été livrées à un même projet par au moins deux fournisseurs différents.
+
+SELECT DISTINCT spj.ID_P FROM spj
+GROUP BY spj.ID_J, spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_S)>=2 
+
+6)On veut, pour chaque pièce, la somme totale livrée à condition qu’il y ait eu plus de 3 livraisons pour cette pièce.
+
+SELECT spj.ID_P, SUM(spj.QTY) FROM spj 
+GROUP BY spj.ID_P 
+HAVING COUNT(spj.DATE_DERNIERE_LIVRAISON)>3 
