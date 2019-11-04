@@ -10,13 +10,11 @@
     * Si l'user est ok, le programme affiche une facture détaillée (voir modèle ci-dessous).
     * il peut y avoir aucun enfant mais au moins 10 adultes.
     *
-    * Incertitude: "Option bulles : 50 € par tranche de 10 personnes."
-    *
     * @author N. Deltour <nathandeltour2@gmail.com>
     * @version 0.1
     */
 
-    var prix, nbBulles, prixBulles, budgetTotal, nbAdulte, coutAdulte, nbEnfant, coutEnfant, nbPersonne, nbCouvert, montantBoissons;
+    var prix, nbBulles, prixBulles, budgetTotal, nbAdulte, coutAdulte, nbEnfant, coutEnfant, nbPersonne, nbCouvert, montantBoissons, nbPersonne, i;
     var bulles = false;
 
     do {
@@ -34,7 +32,8 @@
         coutEnfant = 10 * nbEnfant;
         nbPersonne = nbAdulte + nbEnfant;
         prix = coutAdulte + coutEnfant;
-   
+        prixBulles = 0;
+        nbBulles = 0;
         //Affichage du prix
         document.write('<p>Total: ' + coutAdulte + ' + ' + coutEnfant + ' = ' + prix + ' €</p>');
 
@@ -42,12 +41,12 @@
         bulles = confirm('Voulez-vous l\'option bulles?');
 
         if (bulles) { //Si Bulles=true
-            do {
-                nbBulles = parseInt(prompt('Combien de personnes veulent l\'option Bulles?')); //Demande du nombre de personnes prenant l'option Bulles
-            } while (isNaN(nbBulles) || nbBulles > nbPersonne || nbBulles < 0);
-            prixBulles = 50 * nbBulles; //Calcul montant Bulles
+            for (i = 0; i < nbPersonne; i += 10) { //Par tranche de 10 personnes
+                prixBulles += 50; //Prix de l'option Bulles = 50€ (=> s'additionnent pour chaque nouvelle tranche de 10 personnes)
+                nbBulles += 1; //Incrémentation d'un compteur pour l'affichage final
+            }
             document.write('<p>• ' + nbAdulte + ' adultes (' + coutAdulte + ' €)</p>');
-            
+
             if (nbEnfant > 0) {
                 document.write('<p>• ' + nbEnfant + ' enfants (' + coutEnfant + ' €)</p>');
             }
@@ -56,4 +55,5 @@
         }
     } while (confirm('Voulez-vous recommencer?'));
 </script>
+
 </html>
