@@ -4,36 +4,31 @@
     * L'utilisateur entrera un par un au clavier l'âge respectif des deux partenaires.
     *
     * @author N. Deltour <nathandeltour2@gmail.com>
-    * @version 0.1
+    * @version 0.2
     */
-
     var ageA, ageB, difference;
-
     do {
         //Ages input
         do {
             ageA = parseInt(prompt('Entrez l\'age de la première personne')); 
         } while (isNaN(ageA) || ageA < 0); //On recommence tant que l'âge est négatif ou pas un nombre
-
         do {
             ageB = parseInt(prompt('Entrez l\'age de la deuxième personne'));
         } while (isNaN(ageB) || ageB < 0);
-
-
         //Difference ages
         if (ageB > ageA) { //Si la deuxième personne est plus agée, on switch la soustraction pour éviter une valeur négative
             difference = (ageB - ageA);
         } else {
             difference = (ageA - ageB);
         }
-
         //Output
         if (difference == 0) { //Si la différence est nulle
-            document.write('<p>Entre ' + ageA + ' et ' + ageB + ' => Pas de différence d\'âge</p>');
+            alert('Entre ' + ageA + ' et ' + ageB + ' => Pas de différence d\'âge');
+        } else if (difference == 1) {
+            alert('Entre ' + ageA + ' et ' + ageB + ' => ' + difference + ' an d\'écart');
         } else {
-            document.write('<p>Entre ' + ageA + ' et ' + ageB + ' => ' + difference + ' ans d\'écart</p>');
+            alert('Entre ' + ageA + ' et ' + ageB + ' => ' + difference + ' ans d\'écart');
         }
-
     } while (confirm('Voulez-vous recommencer?')); //Retry
     
 </script>
