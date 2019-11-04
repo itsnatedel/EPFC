@@ -11,10 +11,10 @@
     * il peut y avoir aucun enfant mais au moins 10 adultes.
     *
     * @author N. Deltour <nathandeltour2@gmail.com>
-    * @version 0.1
+    * @version 0.3
     */
 
-    var prix, nbBulles, prixBulles, budgetTotal, nbAdulte, coutAdulte, nbEnfant, coutEnfant, nbPersonne, nbCouvert, montantBoissons, nbPersonne, i;
+    var prix, nbBulles, prixBulles, nbAdulte, coutAdulte, nbEnfant, coutEnfant, nbPersonne, i;
     var bulles = false;
 
     do {
@@ -34,6 +34,7 @@
         prix = coutAdulte + coutEnfant;
         prixBulles = 0;
         nbBulles = 0;
+        
         //Affichage du prix
         document.write('<p>Total: ' + coutAdulte + ' + ' + coutEnfant + ' = ' + prix + ' €</p>');
 
@@ -55,5 +56,4 @@
         }
     } while (confirm('Voulez-vous recommencer?'));
 </script>
-
 </html>
