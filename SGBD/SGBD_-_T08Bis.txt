@@ -1,0 +1,83 @@
+﻿1. On souhaite obtenir les numéros de fournisseurs qui ont effectué au moins quatre livraisons (S2, S5).
+
+SELECT spj.ID_S from spj
+GROUP BY spj.ID_S
+HAVING COUNT(spj.DATE_DERNIERE_LIVRAISON) >3
+
+
+2. On souhaite obtenir les numéros de fournisseurs qui ont effectué au moins quatre livraisons
+concernant au moins trois pièces différentes (S5).
+
+SELECT spj.ID_S FROM spj
+GROUP BY spj.ID_S
+HAVING COUNT(spj.DATE_DERNIERE_LIVRAISON)>3
+AND COUNT(DISTINCT spj.ID_P) >2
+
+
+3. On souhaite obtenir les numéros de pièces pour les pièces fournies par un fournisseur de
+Londres à un projet de Londres (P6).
+
+SELECT spj.ID_P FROM spj
+JOIN s ON s.ID_S=spj.ID_S
+JOIN j ON j.ID_J=spj.ID_J
+WHERE (j.CITY="London") AND (s.CITY="London") 
+
+
+4. On souhaite obtenir les numéros de projets et la quantité totale livrée pour chacun des projets
+fourni par un même fournisseur, pour autant que la quantité totale livrée soit supérieure à 500
+pièces (J4 700, J4 2100, J5 600, J7 800).
+
+SELECT DISTINCT spj.ID_J, SUM(spj.QTY) FROM spj
+GROUP BY spj.ID_J, spj.ID_S
+HAVING SUM(spj.QTY)>500
+
+
+5. On souhaite afficher, pour chaque pièce fournie à un projet, le numéro de la pièce, le numéro du
+projet et la quantité totale fournie dont l’entête sera TOTAL (21 résultats).
+
+SELECT spj.ID_P, spj.ID_J, spj.QTY as TOTAL FROM spj
+GROUP BY spj.ID_P, spj.ID_J
+
+
+6. Obtenir, par pièce fournie plus que deux fois, le numéro de pièce et le nombre de fois qu’elle a été
+fournie (P1 3, P3 9, P5 4, P6 4).
+
+SELECT spj.ID_P, COUNT(spj.DATE_DERNIERE_LIVRAISON) FROM spj
+GROUP BY spj.ID_P
+HAVING COUNT(spj.ID_P) > 2
+
+
+7. Obtenir toutes les paires de villes telles que le fournisseur situé dans la première ville fournisse
+une pièce entreposée dans la seconde ville (7 résultats).
+
+SELECT DISTINCT s.CITY, p.CITY FROM spj
+JOIN s ON s.ID_S=spj.ID_S
+JOIN p ON p.ID_P=spj.ID_P
+GROUP BY spj.ID_S, spj.ID_P
+
+8. Obtenir le nom des fournisseurs qui fournissent au moins une pièce rouge et tel que le
+fournisseur ou la pièce se situent à Paris (Blake).
+
+SELECT s.SNAME FROM spj
+JOIN s ON s.ID_S=spj.ID_S
+JOIN p ON p.ID_P=spj.ID_P
+WHERE p.COLOR="RED"  AND (s.CITY="Paris" OR p.CITY="Paris")
+GROUP BY s.ID_S
+
+
+9. Obtenir la moyenne des quantités livrées de chaque fournisseur de Londres dont le total des
+quantités livrées est supérieur strictement à 800 (450 S1).
+
+SELECT AVG(spj.QTY), s.ID_S FROM spj
+JOIN s ON s.ID_S=spj.ID_S
+WHERE s.CITY="London"
+GROUP BY s.ID_S
+HAVING SUM(spj.QTY)>800
+
+
+10. Obtenir les couples d'identifiants de fournisseurs différents qui fournissent la même pièce pour
+autant qu'ils fournissent la pièce en même quantité (S2 S3, S2 S5, S3 S5).
+
+SELECT spj.ID_S, spj2.ID_S FROM spj, spj spj2
+WHERE spj.ID_P=spj2.ID_P AND spj.QTY=spj2.QTY AND spj.ID_S<spj2.ID_S
+GROUP BY spj.ID_S, spj2.ID_S
