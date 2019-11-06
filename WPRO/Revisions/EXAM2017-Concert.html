@@ -16,7 +16,7 @@
     * Total: 67 €
     *
     * @author N. Deltour <nathandeltour2@gmail.com>
-    * @version 0.1
+    * @version 0.2
     */
     var codeConcert, nbTicketGarland, nbTicketChris, nbTicketJambinai, prix;
     var showDetail = false;
@@ -63,7 +63,7 @@
                     break;
 
                 default:
-                    document.write('<p>Aucune séléction ! </p>');
+                    alert('Aucune séléction !');
             }
 
             prix = (nbTicketGarland * PRIX_CONCERT_JEFFREYS) + (nbTicketChris * PRIX_CONCERT_CHRISTOPHE) + (nbTicketJambinai * PRIX_CONCERT_JAMBINAI); //Calcul du prix
