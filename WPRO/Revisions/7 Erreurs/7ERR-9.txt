@@ -1,0 +1,54 @@
+<script>
+// Multiplie un nombre entré par l’utilisateur par 5 et détermine si le résultat est paire ou impaire  //1 commentaire d'une seule ligne => // au lieu de /* */
+
+//Déclaration des variables
+var input, output, continuer;
+
+function produit(x, y) { //2 typo function
+    return x*y;
+}
+
+do {
+    //Initialisation par lecture (avec FILTRE)
+    do { 
+     input = parseFloat(prompt('Veuillez entrer la données, svp.','')); //3 oubli d'une )
+    } while (isNaN(input) || input < 0); //4 isNaN //5 || au lieu de && 
+
+
+    //Traitement des données avec affichage du résultat //6 Oubli de //
+    output = produit(input,5); //7 , au lieu de ;
+
+    if(output%2 == 1) { //8 Oubli d'un =
+        document.write('<p>[ODD]</p>');
+    } else { //9 Oubli d'une { 
+        document.write('<p>[EVEN]</p>');
+    }
+    continuer = window.prompt('Voulez-vous recommencer? Si oui, tapez \'o\'.',''); //10  s en trop à window  ET //11 Oubli d'un \
+} while(continuer == 'o'); //12 Typo continuer
+
+</script>
+
+//Explications des erreurs
+1. La documentation du code doit être précédée de la suite de caractères /**  sur la première ligne,  *  sur les lignes intermédiaires et  */ sur la dernière ligne.
+
+2. Faute d’orthographe sur le mot-clé function.
+
+3. Il manque une parenthèse fermante pour les fonctions imbriquées parseFloat() et prompt().
+
+4. Faute d’orthographe sur le nom de la fonction isNaN(). Les N sont en majuscules.
+
+5. Dans ce cas-ci, l’opérateur logique || (OU) convient mieux.
+
+6. Il manque les symboles // pour définir un commentaire de pleine ligne.
+
+7. Il faut utiliser la virgule pour énumérer les paramètres d’une fonction.
+
+8. Confusion entre l’opérateur d’affectation = et l’opérateur de comparaison == pour signifier l’égalité.
+
+9. Il manque une accolade pour délimiter le début du bloc d’instructions de la branche else.
+
+10. Faute d’orthographe sur le nom de l’objet window.
+
+11. Il faut échapper les apostrophes ' dans une chaîne de caractères délimitée par ce symbole.
+
+12. Faute d’orthographe sur le nom de la variable continuer.
