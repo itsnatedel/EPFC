@@ -1,0 +1,54 @@
+
+<script>
+/** //1
+ * Sélection de tickets de concert.
+ * @author Bob //2 author
+ */
+ 
+//Déclaration des variables et des constantes
+const CONCERT = 'Garland Jeffreys';
+const PRIX_CONCERT = 26;
+var montantTotal = 0, qtyConcert = 0; //3 var 
+
+//Lecture des données
+do {
+    do {
+        qtyConcert = parseInt(prompt('Nombre de tickets pour '+CONCERT)); //4 '
+    } while(isNaN(qtyConcert) || qtyConcert<0); //5 )
+            
+    switch(qtyConcert) {  //6 { 
+        case 1:
+            montantTotal = PRIX_CONCERT;
+            break; //7 typo break
+         default: //8 case en trop
+            montantTotal = PRIX_CONCERT * qtyConcert;
+    }
+} while(confirm('Voulez-vous commander d\'autres tickets?')); //9 \ ET //5 )
+
+if(qtyConcert == 0) { //10 =
+    document.write('<p>Aucune sélection!</p>');
+} else {
+    document.write('<p>Total: '+montantTotal +' &euro;</p>');
+}
+</script>
+
+//Explications des erreurs
+1. La documentation du code doit être précédée de la suite de caractères /**  sur la première ligne,  *  sur les lignes intermédiaires et  */ sur la dernière ligne.
+
+2. L’annotation @author s’écrit en anglais.
+
+3. Le mot-clé var ne doit être utiliser qu’une fois au début d’une déclaration multiple par énumération.
+
+4. Une chaîne de caractères doit être délimitée par des apostrophes ou des guillemets.
+
+5.Parenthèse fermante superflue (ou parenthèse ouvrante manquante).
+
+6. Il manque une accolade pour délimiter le début du bloc d’instructions de la structure switch.
+
+7.Faute d’orthographe sur l’instruction de contrôle de flux break.
+
+8. Le cas par défaut s’écrit default sans case dans la structure conditionnelle swith.
+
+9. Il faut échapper les apostrophes ' avec un backslash dans une chaîne de caractères délimitée par ce symbole.
+
+10. Confusion entre l’opérateur d’affectation = et l’opérateur de comparaison == pour signifier l’égalité.
