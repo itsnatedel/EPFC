@@ -1,0 +1,34 @@
+<script>
+// Déclarer les variables //1
+var ageP1 = 20, ageP2; //2 ; au lieu de ,
+var ecart; 
+
+do {
+    //Lecture des données
+    
+    do {
+        ageP2 = prompt('Age du second partenaire?');
+    } while(isNaN(ageP2) || ageP2<0 || parseInt(ageP2)!=ageP2); //3 != au lieu de =! ET //4 isNaN au lieu de isnan
+    ageP2 = parseInt(ageP2);
+
+    //Traitement des données
+    if(ageP1>ageP2) {
+        ecart = ageP1 - ageP2;
+    } else { //5 oubli d'une {
+        ecart = ageP2 - ageP1;
+    }
+
+    //Affichage du résultat
+    if(ecart==0) {//6
+        document.write('<p>Pas de différence d\'âge</p>'); //7 oubli d'un \
+    } else {
+		if(ecart==1) { 
+            document.write('<p>Entre '+ageP1+' et ' //8 manque un +
+                +ageP2+' => '+ecart+' an d\'écart</p>');
+        } else {
+            document.write('<p>Entre '+ageP1+' et '
+                +ageP2+' => '+ecart+' ans d\'écart</p>'); //9 oubli d'un '
+        }
+        //11 une } en trop
+} while(confirm('Voulez-vous recommencer?')); //10 oubli d'une )
+</script>
