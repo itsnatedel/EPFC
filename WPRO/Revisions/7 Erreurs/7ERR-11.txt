@@ -1,0 +1,52 @@
+<script>
+/**
+ * Calcul de la différence d’âge entre deux partenaires.
+ * @authors Bob D. & Marc V. //1 author singulier
+ */
+
+// Déclarer les variables //2 commentaire mono-ligne > //
+var ageP1 = 20,  ageP2; //3 var
+var ecart;
+
+do {
+    //Lecture des données
+    do {
+        ageP2 = prompt('Age du second partenaire?'); //4 prompt p miniscule
+    } while(isNaN(ageP2) || ageP2<0 || parseInt(ageP2)!=ageP2);
+    ageP2 = parseInt(ageP2);
+
+    //Traitement des données
+    ecart = Math.abs(ageP1 - ageP2); //5 ) superflue
+
+    //Affichage du résultat
+    switch(ecart) {
+        case 0:
+            document.write('<p>Pas de différence.</p>'); break;
+        case 1:
+            document.write('<p>'+ecart+' an seulement.</p>'); break; //6 ;
+        default: //7 typo default
+            document.write('<p>'+ecart+' ans d\'écart</p>'); //8 \
+    } //9 }
+} while(confirm('Voulez-vous recommencer?')); //10 ' '
+</script>
+
+//Explications des erreurs
+1. L’annotation @author s’écrit au singulier.
+
+2. Un commentaire de pleine ligne commence par un double slash // (2 barres obliques)
+
+3. Le mot-clé var ne doit être utiliser qu’une fois au début d’une déclaration multiple par énumération.
+
+4. Faute d’orthographe : la fonction prompt() s’écrit en minuscule.
+
+5. Parenthèse fermante superflue.
+
+6. Les instructions doivent être séparées par un point-virgule.
+
+7. Le cas par défaut s’écrit default en anglais avec un L minuscule dans la structure conditionnelle switch.
+
+8. Il faut échapper les apostrophes ' avec un backslash dans une chaîne de caractères délimitée par ce symbole.
+
+9. Il manque une accolade pour délimiter la fin du bloc d’instructions de la structure switch.
+
+10. Une chaîne de caractères doit être délimitée par des apostrophes ou des guillemets.
