@@ -1,0 +1,29 @@
+<script>
+    /* Calcul d'une prime de 10% d'un total de ventes supérieur à ]1000 euros,
+    * ou de 5% d'un total de ventes compris entre ]500 et 1000] euros,
+    * ou de 2% d'un total de ventes compris entre ]0 et 500] euros. 
+	*/ //1
+
+    //Déclaration des variables
+    var totalVentes, montantPrime, tauxPrime; //2
+
+    do { //3
+        //Lecture des données
+        do {
+            totalVentes = parseFloat(prompt('Chiffre de vente? Pour arrêter, tapez 0.'); //4 //5
+        } while(isNaN(totalVentes));
+        //Traitement des données
+        if (totalVentes > 0 && totalVentes <= 500) { //6
+            tauxPrime = 0.02; //7
+        } else if (totalVentes > 500 && totalVentes <= 1000) { 
+            tauxPrime = 0.05; 
+        } else if (totalVentes > 1000) {
+            tauxPrime = 0.10; /
+        } else { //8
+            tauxPrime = 0;
+        }
+        montantPrime = totalVentes * tauxPrime;
+        //Affichage du résultat
+        document.write('<p>MontantPrime: ' + montantPrime + ' €</p>'); //9
+    } while (totalVentes != 0); //10
+</script>
