@@ -1,0 +1,65 @@
+<metacharset = "UTF-8">
+<script>
+	/**
+	 * Examen 2019-2020
+	 * Coût du divorce
+	 * @author Nathan Deltour
+	 * @version 0.1
+	 */
+//Déclaration des variables et constantes
+var coutTotal, fraisFiscaux, coutP1, coutP2;
+var fraisJustice, pourcentageP1 = 50, pourcentageP2;
+var divorceAmiable = false; //Variable booléenne pour déduire le type de divorce
+
+const COUT_GESTION = 399
+const FRAIS_ADMINISTRATIFS = 20;
+
+//Traitement des données
+do {
+	divorceAmiable = confirm('Voulez-vous un divorce à l\'amiable?'); //Demande du type de divorce
+
+	if (divorceAmiable) { //Si divorce à l'amiable
+		do {
+			pourcentageP1 = parseInt(prompt('Quel proportion du coût désirez-vous payer? (Défault: 50%)'));
+		} while (pourcentageP1 < 0 || pourcentageP1 > 100);
+		
+		if (isNaN(pourcentageP1)) { //Si la valeur de pourcentageP1 est nulle
+			pourcentageP1 = 50; //La valeur sera mise par défaut à 50
+		}
+		
+		//Calculs
+		pourcentageP2 = 100 - pourcentageP1; //Calcul du pourcentage de répartition du conjoint
+		
+		fraisJustice = 20*2; //Calcul des frais de justice
+		fraisFiscaux = 82.50; //Prix des frais fiscaux
+		
+		coutTotal = COUT_GESTION+fraisJustice+fraisFiscaux; //Calcul du total
+		
+		coutP1 = coutTotal-(coutTotal*(pourcentageP2/100)); //Calcul du cout pour la première personne après répartition
+		coutP2 = coutTotal-(coutTotal*(pourcentageP1/100)); //Calcul du cout pour la deuxième personne après répartition
+		
+	} else { //Si divorce non-amiable
+		fraisFiscaux = 165; //Cout des frais fiscaux en cas de divorce non-amiable
+		coutTotal = COUT_GESTION+FRAIS_ADMINISTRATIFS+fraisFiscaux; //Calcul du cout total en cas de divorce non-amiable
+	}
+
+	//Affichage du résultat
+	if (!divorceAmiable) { //Si le divorce est non-amiable (false)
+		document.write('<p>Divorce non-amiable</p>');
+		document.write('<li> Gestion: ' +COUT_GESTION+' €</li>');
+		document.write('<li> Frais administratifs: ' +FRAIS_ADMINISTRATIFS+' €</li>');
+		document.write('<li> Frais fiscaux: '+fraisFiscaux+' €</li>');
+		document.write('<p>Coût total: ' +coutTotal+' €</p>');
+		document.write('<p>* hors frais d\'huisser et de justice.</p>');
+	} else { //Si le divorce est à l'amiable (true)
+		document.write('<p>Divorce à l\'amiable</p>');
+		document.write('<li> Gestion: ' +COUT_GESTION+' €</li>');
+		document.write('<li> Frais de justice: ' +fraisJustice+' €</li>');
+		document.write('<li> Frais fiscaux: '+fraisFiscaux+' €</li>');
+		document.write('<p>Coût total: ' +coutTotal+' €</p>');
+		document.write('<p>Répartition: '+pourcentageP1+ '/'+pourcentageP2+'</p>');
+		document.write('<li> Partenaire 1: ' +coutP1.toFixed(2)+' €</li>');
+		document.write('<li> Partenaire 1: ' +coutP2.toFixed(2)+' €</li>');
+	}
+} while (confirm('Voulez-vous recommencer?')); //Recommencer sans recharger la page
+</script>
