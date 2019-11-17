@@ -1,0 +1,132 @@
+-- Requêtes imbriquées avec le mot clé IN --
+1. On souhaite les noms des pièces qui sont fournies, lors d'une livraison, en 500 unités. (Screw, Cam, Cog)
+
+SELECT DISTINCT p.PNAME FROM p 
+WHERE p.ID_P IN ( SELECT spj.ID_P
+                    FROM spj
+                   WHERE spj.QTY = 500)
+
+2. On souhaite connaître les noms des pièces fournies par le fournisseur S2. (Screw, Cam)
+
+SELECT p.PNAME FROM p 
+WHERE p.ID_P IN ( SELECT spj.ID_P
+                  FROM spj
+                  WHERE spj.ID_S='S2')
+
+3. On souhaite connaître les noms des fournisseurs de la pièce P3. (Jones, Blake, Adams)
+
+SELECT s.SNAME FROM s
+WHERe s.ID_S IN ( SELECT spj.ID_S
+                  FROM spj 
+                  WHERE spj.ID_P="P3")
+
+4. On souhaite connaître les noms des fournisseurs d'au moins une pièce de couleur rouge. (Smith,
+Blake, Clark, Adams)
+
+SELECT s.SNAME FROM s
+WHERE s.ID_S IN ( SELECT spj.ID_S
+                  FROM spj 
+                  WHERE spj.ID_P IN ( SELECT p.ID_P
+                                      FROM p
+                                      WHERE p.COLOR="Red") )
+
+5. On souhaite connaître les numéros des fournisseurs et les noms des fournisseurs qui fournissent des
+pièces au projet Console. (S1 Smith, S2 Jones, S5 Adams)
+
+SELECT s.ID_S, s.SNAME FROM s
+WHERE s.ID_S IN ( SELECT spj.ID_S
+                  FROM spj 
+                  WHERE spj.ID_J IN ( SELECT j.ID_J 
+                                      FROM j
+                                      WHERE j.JNAME="Console"))
+
+6. On souhaite connaître le nom des projets pour lesquels on a fourni au total plus de 1000 pièces.
+(Display, Console, RAID, Tape)
+
+SELECT j.JNAME FROM j
+WHERE j.ID_J IN ( SELECT spj.ID_J
+                  FROM spj
+                  GROUP BY spj.ID_J
+                  HAVING SUM(spj.QTY) > 1000)
+
+
+-- Requêtes imbriquées avec ANY, ALL et comparaisons --
+
+7. On souhaite connaître les numéros de pièces qui sont d’une couleur différente des couleurs des
+autres pièces (une pièce dont la couleur n’apparaît qu’une seule fois dans la base de données). (Bolt)
+
+SELECT p.PNAME FROM p
+WHERE p.COLOR = ANY ( SELECT p2.COLOR 
+                       FROM p p2 
+                       GROUP BY p2.COLOR 
+                       HAVING COUNT(p2.ID_P)=1)
+
+8. Quelle est la pièce la plus lourde ? Ecrivez une version avec ANY ou ALL et une seconde avec une
+liaison naturelle. (Cog)
+
+-- 8.1 ALL --
+SELECT p.PNAME FROM p
+WHERE p.WEIGHT >= ALL ( SELECT SUM(p2.WEIGHT)
+                       FROM p p2 
+                       GROUP BY p2.ID_P)
+
+-- 8.2 LIAISON NATURELLE --
+SELECT p.PNAME FROM p
+WHERE p.WEIGHT = ( SELECT MAX(p2.WEIGHT)
+                       FROM p p2 )
+
+
+-- Pour aller plus loin… --
+
+9. Quels sont les identifiants de fournisseurs qui ne livrent aucune pièce bleue ? (S1, S4)
+
+SELECT s.ID_S FROM s
+WHERE s.ID_S NOT IN ( SELECT spj.ID_S
+                      FROM spj 
+                      WHERE spj.ID_P = ANY ( SELECT p.ID_P
+                                         FROM p
+                                         WHERE p.COLOR="Blue"))
+
+10. On souhaite connaître le nombre de livraisons de moins de 350 unités pour l’ensemble des
+fournisseurs qui n’ont jamais fourni à Paris. (8)
+
+SELECT COUNT(spj.DATE_DERNIERE_LIVRAISON) FROM spj
+WHERE spj.ID_S IN (SELECT s.ID_S FROM s
+				   WHERE s.ID_S NOT IN ( SELECT spj.ID_S
+                      					 FROM spj, j
+                     					 WHERE j.ID_J=spj.ID_J
+                     					 AND j.CITY="Paris"))
+AND spj.QTY <350
+
+11. On souhaite connaître les fournisseurs qui n’ont jamais fourni plus de 650 pièces identiques au total
+de toutes leurs livraisons. (C’est à dire ceux dont aucune pièce de leur stock n’a baissé de 650
+unités). (S3, S4)
+
+SELECT DISTINCT spj.ID_S FROM spj
+WHERE spj.ID_S NOT IN ( SELECT  spj.ID_S
+                        FROM spj
+                        WHERE spj.QTY > 650)
+
+12. On souhaite connaître les fournisseurs qui ont fait au minimum 4 livraisons représentant au moins
+trois pièces différentes. (S5)
+
+SELECT DISTINCT spj.ID_S FROM spj
+WHERE spj.ID_S IN ( SELECT spj.ID_S
+                    FROM spj
+                    GROUP BY spj.ID_S
+                    HAVING COUNT(*)>=4 AND COUNT(DISTINCT spj.ID_P)>=3)
+
+13. On souhaite les fournisseurs qui fournissent au moins dans trois villes différentes et dont les pièces
+qu’ils fournissent proviennent d’au moins deux villes différentes. (S2, S5)
+
+SELECT DISTINCT spj.ID_S FROM spj
+WHERE spj.ID_S IN ( SELECT spj.ID_S
+                    FROM spj, j
+                    WHERE j.ID_J=spj.ID_J
+                    GROUP BY spj.ID_S
+                    HAVING COUNT(DISTINCT j.CITY)>=3)
+AND spj.ID_S IN ( SELECT spj.ID_S
+                  FROM spj, p
+                  WHERE p.ID_P=spj.ID_P
+                  GROUP BY spj.ID_S
+                  HAVING COUNT(DISTINCT p.CITY)>=2)
