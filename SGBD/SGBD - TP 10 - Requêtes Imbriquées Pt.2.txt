@@ -115,7 +115,7 @@ HAVING COUNT(ea.SSN2) >= ALL ( SELECT COUNT(ea.SSN2)
 
 
 --BONUS--
-Le nom de la personne qui a envoyé un message à toutes les femmes
+Le nom de la personne qui a envoyé un message à toutes les femmes (Xavier?)
 --Pas sûr --
 SELECT p.Nom FROM personne p
 WHERE p.SSN IN ( SELECT m.Expediteur
