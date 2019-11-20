@@ -1,0 +1,131 @@
+-- TP 10 --
+-- Table Facebook --
+-- Requêtes imbriquées avec le mot clé IN --
+
+1. Afficher le contenu des messages envoyés par un homme. (4 réponses)
+SELECT m.Contenu FROM message m
+WHERE m.Expediteur IN ( SELECT p.SSN
+                       FROM personne p
+                       WHERE p.Sexe="M")
+
+2. Afficher le nom des personnes qui ont reçu le message M4. (Julie et Marie)
+SELECT p.Nom FROM personne p
+WHERE p.SSN IN ( SELECT d.Destinataire
+                 FROM destinataires d
+                 WHERE d.ID_Message="M4")
+
+3. Afficher le contenu des messages reçus par une femme de moins de 30 ans. (3 réponses)
+SELECT m.Contenu FROM message m
+WHERE m.ID_Message IN ( SELECT d.ID_Message
+                        FROM destinataires d
+                        WHERE d.Destinataire IN ( SELECT p.SSN
+                                                  FROM personne p
+                                                  WHERE p.Age < 30
+                                                  AND p.Sexe = "F"))
+
+4. Afficher le nom des amis de la personne P1. (Julie, David et Xavier)
+SELECT p.Nom FROM personne p
+WHERE p.SSN IN ( SELECT ea.SSN2
+                 FROM estami ea
+                 WHERE ea.SSN1="P1")
+
+5. Quels sont les amis des amis de P1 ? (P1, P2, P3 et P4)
+SELECT DISTINCT ea.SSN1 FROM estami ea
+WHERE ea.SSN2 IN ( SELECT ea2.SSN1
+                   FROM estami ea2
+                   WHERE ea2.SSN2="P1")
+
+6. Quels sont les amis des amis de Xavier? (P1, P2, P3 et P4)
+SELECT DISTINCT ea.SSN1 FROM estami ea
+WHERE ea.SSN2 IN ( SELECT ea2.SSN1
+                   FROM estami ea2
+                   WHERE ea2.SSN2 = ( SELECT p.SSN
+                                      FROM personne p
+                                      WHERE p.Nom="Xavier"))
+
+7. Quelles sont les personnes qui ont envoyé un message à une femme et qui ont
+reçu un message d’un homme ? (Xavier)
+SELECT p.Nom FROM personne p
+WHERE p.SSN IN ( SELECT m.Expediteur
+                 FROM message m
+                 WHERE m.ID_Message IN ( SELECT d.ID_Message
+                                         FROM destinataires d
+                                         WHERE d.Destinataire IN ( SELECT p.SSN
+                                                                   FROM personne p
+                                                                   WHERE p.Sexe="F")))
+AND p.SSN IN ( SELECT d.Destinataire
+               FROM destinataires d
+               WHERE d.ID_Message IN ( SELECT m.ID_Message
+                                       FROM message m
+                                       WHERE m.Expediteur IN ( SELECT p.SSN
+                                                               FROM personne p
+                                                               WHERE p.Sexe="M")))
+
+8. Quelle personne n’a envoyé aucun message ? (David)
+SELECT p.Nom FROM personne p
+WHERE p.SSN  NOT IN ( SELECT m.Expediteur
+                      FROM message m )
+
+9. Quelle personne n’a reçu aucun message ? (Paul)
+SELECT p.Nom FROM personne p
+WHERE p.SSN NOT IN ( SELECT d.Destinataire
+                     FROM destinataires d )
+
+10. Qui n’a jamais envoyé de message à un homme ? (David, Xavier et Remy)
+SELECT p.Nom FROM personne p
+WHERE p.SSN  NOT IN ( SELECT m.Expediteur
+                      FROM message m
+                      WHERE m.ID_Message IN ( SELECT d.ID_Message
+                                              FROM destinataires d
+                                              WHERE d.Destinataire IN ( SELECT p.SSN
+                                                                        FROM personne p
+                                                                        WHERE p.Sexe="M")))
+
+-- Requêtes imbriquées avec ANY, ALL et comparaisons --
+-- Même si certaines requêtes sont réalisables sans requête(s) imbriquée(s), utilisez-en dans les exercices suivants --
+
+11. Quel est le message le plus récent ? Utilisez ANY ou ALL. (M6)
+--Le message le plus récent est celui avec la date "la plus élevée" en quelque sorte --
+SELECT m.ID_Message FROM message m
+WHERE m.Date_Expedition >= ALL ( SELECT m.Date_Expedition
+                           		 FROM message m )
+
+12. Quelle est la personne la plus jeune ? Ecrivez une version avec ANY ou ALL et une seconde avec une
+liaison naturelle. (Remy)
+-- 12.1 ANY/ALL --
+SELECT p.Nom FROM personne p
+WHERE p.Age <= ALL ( SELECT p.Age
+                     FROM personne p )
+-- 12.2 LIAISON NATURELLE -- 
+SELECT p.Nom FROM personne p
+WHERE p.Age = ( SELECT MIN(p.Age)
+                FROM personne p ) 
+
+13. Afficher le contenu de tous les messages sauf le plus ancien. (5 réponses)
+SELECT m.Contenu FROM message m
+WHERE m.Date_Expedition > ALL ( SELECT MIN(m.Date_Expedition)
+                                FROM message m )
+
+14. Afficher la ou les personnes qui ont le plus d’amis. (Paul et Julie)
+SELECT ea.SSN1, COUNT(ea.SSN2) FROM estami ea
+GROUP BY ea.SSN1
+HAVING COUNT(ea.SSN2) >= ALL ( SELECT COUNT(ea.SSN2)
+                               FROM estami ea 
+                               GROUP BY ea.SSN1)
+
+
+--BONUS--
+Le nom de la personne qui a envoyé un message à toutes les femmes
+--Pas sûr --
+SELECT p.Nom FROM personne p
+WHERE p.SSN IN ( SELECT m.Expediteur
+                 FROM message m
+                 WHERE m.ID_Message IN ( SELECT d.ID_Message
+                                         FROM destinataires d
+                                         WHERE d.Destinataire IN ( SELECT p.SSN
+                                                                   FROM personne p
+                                                                   WHERE p.Sexe="F")
+                                         GROUP BY d.ID_Message 
+                                         HAVING COUNT(DISTINCT d.Destinataire) >= ( SELECT COUNT(p.SSN) 
+                                                                                 	FROM personne p
+                                                                                 	WHERE p.Sexe="F")))
