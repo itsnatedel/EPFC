@@ -42,7 +42,7 @@ GROUP BY spj.ID_P, spj.ID_J
 6. Obtenir, par pièce fournie plus que deux fois, le numéro de pièce et le nombre de fois qu’elle a été
 fournie (P1 3, P3 9, P5 4, P6 4).
 
-SELECT spj.ID_P, COUNT(spj.DATE_DERNIERE_LIVRAISON) FROM spj
+SELECT spj.ID_P, COUNT(*) FROM spj
 GROUP BY spj.ID_P
 HAVING COUNT(spj.ID_P) > 2
 
