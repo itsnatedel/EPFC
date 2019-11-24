@@ -16,12 +16,21 @@ Langages acquis:
 `SQL`, `JavaScript`, `HTML`, `CSS`, `PHP`, `C++`
 
 Liens des repos de cours:
-[SGBD] https://github.com/mvker/EPFC/tree/master/SGBD 
-[WPRO] https://github.com/mvker/EPFC/tree/master/WPRO
-[WSERV] https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur
+1.[SGBD] 
+https://github.com/mvker/EPFC/tree/master/SGBD 
+2.[WPRO] 
+https://github.com/mvker/EPFC/tree/master/WPRO
+3.[WSERV] 
+https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur
 
 ```
 N'hésitez pas à suivre les différents repos de la classe! <br/>
-Belkacem: https://github.com/belkacem98/EPFC </br>
-Amine: https://github.com/AminoPapy95/EPFC </br>
-Kwasi: https://github.com/KwasiEzor
+
+-Belkacem: <br/>
+https://github.com/belkacem98/EPFC <br/>
+
+-Amine: <br/> 
+https://github.com/AminoPapy95/EPFC <br/>
+
+-Kwasi: <br/>
+https://github.com/KwasiEzor
