@@ -1,37 +1,25 @@
-## Welcome to GitHub Pages
+## Bienvenue sur mon repo personnel!
 
-You can use the [editor on GitHub](https://github.com/mvker/EPFC/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Vous trouverez les différents exercices, examens et révisions vus aux différents cours des études de Web Developper.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Ce profil GitHub servira principalement à garder certains acquis en les mettant en ligne sur cette plaforme.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Cours:
 
 ```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+- SGBD
+- WPRO
+- WSERV
 
-- Bulleted
-- List
+Langages acquis:
+`SQL`, `JavaScript`, `HTML`, `CSS`, `PHP`, `C++`
 
-1. Numbered
-2. List
+Liens des repos de cours:
+[https://github.com/mvker/EPFC/tree/master/SGBD](SGBD) 
+[https://github.com/mvker/EPFC/tree/master/WPRO](WPRO)
+[https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur](WSERV)
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mvker/EPFC/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+N'hésitez pas à suivre les différents repos de la classe!
+[https://github.com/belkacem98/EPFC](Belkacem)
