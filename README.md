@@ -18,10 +18,10 @@ Langages acquis:
 Liens des repos de cours:
 [SGBD] https://github.com/mvker/EPFC/tree/master/SGBD 
 [WPRO] https://github.com/mvker/EPFC/tree/master/WPRO
-[WSERV](https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur)
+[WSERV] https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur
 
 ```
 N'hésitez pas à suivre les différents repos de la classe! <br/>
-Belkacem: [https://github.com/belkacem98/EPFC]
-Amine: https://github.com/AminoPapy95/EPFC
+Belkacem: https://github.com/belkacem98/EPFC </br>
+Amine: https://github.com/AminoPapy95/EPFC </br>
 Kwasi: https://github.com/KwasiEzor
