@@ -15,13 +15,12 @@ Ce profil GitHub servira principalement à garder certains acquis en les mettant
 Langages acquis:
 `SQL`, `JavaScript`, `HTML`, `CSS`, `PHP`, `C++`
 ```
-Liens directs vers les repos de cours:
-[SGBD] https://github.com/mvker/EPFC/tree/master/SGBD <br/>
-[WPRO] https://github.com/mvker/EPFC/tree/master/WPRO <br/>
-[WSERV] https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur <br/>
+### Liens directs vers les repos de cours:
+https://github.com/mvker/EPFC/tree/master/SGBD <br/>
+https://github.com/mvker/EPFC/tree/master/WPRO <br/>
+https://github.com/mvker/EPFC/tree/master/Scripts%20Serveur <br/>
 
-N'hésitez pas à suivre les différents repos de la classe! <br/>
-
+### N'hésitez pas à suivre les différents repos de la classe! 
 -Belkacem: <br/>
 https://github.com/belkacem98/EPFC <br/>
 
