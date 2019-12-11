@@ -1,0 +1,138 @@
+-- SGBD TP12--
+-- Table Hamburgers --
+
+(1) Quel est le nom et le poids des personnes de moins de 32 ans qui ont mangé un hamburger de
+boeuf de plus de 1000 calories ?(Lisa 50)
+SELECT DISTINCT p.Nom, p.Poids FROM personne p
+JOIN mange m ON m.ID_P=p.ID
+JOIN hamburger ham ON ham.ID=m.ID_H
+WHERE p.Age<32
+AND ham.Genre="Boeuf"
+AND ham.Calories>1000
+
+(2) Quel est le nom et l’âge des hommes de plus de 60 kg qui ont mangé un hamburger de poulet
+et qui lui ont donné une note strictement inférieure à 7 ?(Tony 33 et Marc 60)
+SELECT p.Nom, p.Age FROM personne p
+JOIN mange m ON m.ID_P=p.ID
+JOIN hamburger ham ON ham.ID=m.ID_H
+WHERE p.Poids>60
+AND ham.Genre="Poulet"
+AND m.Note<7
+
+(3) Quel est le nom des hamburgers et la moyenne des notes pour les hamburgers ayant été mangés
+par au moins 3 personnes différentes ?(Bicky 6.75 et Bicky Poulet Cheese 5.66)
+SELECT ham.Nom, AVG(m.Note) FROM hamburger ham
+JOIN mange m ON m.ID_H=ham.ID
+GROUP BY ham.ID
+HAVING COUNT(DISTINCT m.ID_P)>=3
+
+(4) Pour les hamburgers dont la moyenne des notes est supérieure ou égale à 6, quel est leur nom
+et le nombre de personnes différentes les ayant mangé ?(Bicky 4, Bicky Poulet 2 et Mega Burger 1)
+SELECT ham.Nom, COUNT(DISTINCT p.ID) FROM hamburger ham
+JOIN mange m ON m.ID_H=ham.ID
+JOIN personne p ON p.ID=m.ID_P
+GROUP BY ham.ID
+HAVING AVG(m.Note)>=6	
+
+(5) Quel est le nom et le sexe des personnes qui ont mangé au moins 3 fois le même hamburger ?(Lisa F)
+SELECT p.Nom, p.Sexe, m.ID_H FROM personne p
+JOIN mange m ON m.ID_P=p.ID
+GROUP BY m.ID_H, m.ID_P
+HAVING COUNT(m.ID_H)>=3
+
+(6) Quelles sont les dates où le même hamburger a été mangé au moins deux fois ?(29/5 et 21/5)
+SELECT DATE(m.Date_Consommation) FROM mange m
+GROUP BY m.Date_Consommation 
+HAVING COUNT(DISTINCT m.ID_P)>=2
+
+(7) Quel est le nom des hamburgers qui ont été mangés par un homme de plus de 100 kg et qui
+n’ont jamais été mangés par une femme de plus de 30 ans ?(Bicky Poulet Cheese)
+SELECT ham.Nom FROM hamburger ham
+WHERE ham.ID IN ( SELECT m.ID_H
+                  FROM mange m
+                  WHERE m.ID_P IN ( SELECT p.ID
+                                    FROM personne p
+                                    WHERE p.Poids>100
+                                    AND p.Sexe="M"))
+AND ham.ID NOT IN ( SELECT m.ID_H
+                FROM mange m
+                WHERE m.ID_P = ( SELECT p.ID
+                                 FROM personne p
+                                 WHERE p.Sexe="F"
+                                 AND p.Age>30))
+
+(8) Quel est le nom des personnes qui ont mangé un hamburger de poulet et qui n’ont jamais
+mangé un hamburger de boeuf de moins de 1000 calories ?(Tony, Lisa et Marc)
+SELECT p.Nom FROM personne p
+WHERE p.ID IN ( SELECT m.ID_P
+                FROM mange m
+                WHERE m.ID_H IN ( SELECT ham.ID
+                                  FROM hamburger ham
+                                  WHERE ham.Genre="Poulet"))
+AND p.ID NOT IN ( SELECT m.ID_P
+                  FROM mange m
+                  WHERE m.ID_H IN ( SELECT ham.ID
+                                    FROM hamburger ham
+                                    WHERE ham.Genre="Boeuf"
+                                    AND ham.Calories<1000))
+
+(9) Quel est le nom des femmes qui ont mangé tous les hamburgers de poulet ?(Lisa)
+SELECT p.Nom FROM personne p
+WHERE p.ID IN ( SELECT m.ID_P
+                FROM mange m
+                WHERE m.ID_H IN ( SELECT ham.ID
+                                  FROM hamburger ham
+                                  WHERE ham.Genre="Poulet"))
+AND p.Sexe="F"
+
+(10) Quel est le nom des hamburgers de boeuf qui ont été mangés par toutes les personnes de plus
+de 80 kilos ?(Bicky)
+SELECT ham.Nom FROM hamburger ham
+WHERE ham.ID IN ( SELECT m.ID_H
+                  FROM mange m
+                  WHERE m.ID_P IN ( SELECT p.ID
+                                    FROM personne p
+                                    WHERE p.Poids>80))
+AND ham.Genre="Boeuf"
+
+(11) Affichez tous les hamburgers sauf le plus calorique? (Tous sauf le Giga Burger)
+SELECT ham.Nom FROM hamburger ham
+WHERE ham.ID NOT IN ( SELECT ham.ID
+                      FROM hamburger ham
+                      WHERE ham.Calories = ( SELECT MAX(ham.Calories)
+                                             FROM hamburger ham))
+
+(12) Quel est l’homme le plus lourd qui a mangé un hamburger de poulet ?(P3)
+SELECT p.ID FROM personne p
+WHERE p.ID = ( SELECT p.ID
+               FROM personne p
+               WHERE p.Poids = ( SELECT MAX(p.Poids)
+                                 FROM personne p))
+AND p.ID IN ( SELECT m.ID_P
+              FROM mange m
+              WHERE m.ID_H IN ( SELECT ham.ID
+                                FROM hamburger ham
+                                WHERE ham.Genre="Poulet"))
+
+(13) Quels sont les hamburgers qui ont été mangés par des hommes et des femmes ?(H1, H2 et H4)
+SELECT DISTINCT m.ID_H FROM mange m
+WHERE m.ID_H IN ( SELECT m.ID_H
+                  FROM mange m
+                  WHERE m.ID_P IN ( SELECT p.ID
+                  					FROM personne p
+                  					WHERE p.Sexe = "F"))
+AND m.ID_H IN ( SELECT m.ID_H
+                FROM mange m
+                WHERE m.ID_P IN ( SELECT p.ID
+                                  FROM personne p
+                                  WHERE p.Sexe = "M"))
+
+(14) Qui a mangé le moins d’hamburger ?(P1 et P2)
+SELECT p.ID FROM personne p
+WHERE p.ID IN ( SELECT m.ID_P
+                FROM mange m
+		GROUP BY m.ID_P
+		HAVING COUNT(m.ID_P) <= ALL (SELECT COUNT(m.ID_P)
+                          		     FROM mange m
+                            		     GROUP BY m.ID_P))
+						
