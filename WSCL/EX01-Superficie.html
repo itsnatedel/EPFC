@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculateur de superficie et de perimètre</title>
+
+    <style>
+        form {
+            width: 200px;
+            float: left;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            float: left;
+        }
+
+        div {
+            background-color: lightblue;
+            float: left;
+            width: 200px;
+            height: 167px;
+        }
+
+        .button {
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Formulaire-->
+    <form id="formLonLarg" method="get" action="" onsubmit="return false">
+        <fieldset>
+            <p>
+                <label for="longueur">Longueur:</label>
+                <input type="text" name="longueur" id="longueur">
+            </p>
+            <p>
+                <label for="largeur">Largeur:</label>
+                <input type="text" name="largeur" id="largeur">
+            </p>
+            <button class="button" onclick="calculerSuperficie()" type="submit">Calculer Superficie</button>
+            <button class="button" onclick="calculerPerimetre()" type="submit">Caulculer Perimètre</button>
+        </fieldset>
+    </form>
+
+    <!--Image résultat-->
+    <img src="questionmark.jpg">
+
+    <!--Zone bleue (réponse)-->
+    <div id="rep"></div>
+
+    <!--Script JS-->
+    <script>
+        function calculerSuperficie() {
+            let frmSuperficie = document.getElementById('formLonLarg');
+            let longueur = parseInt(frmSuperficie.longueur.value);
+            let largeur = parseInt(frmSuperficie.largeur.value);
+
+            //Contraintes de validations
+            if (!isNaN(longueur) && longueur > 0 && !isNaN(largeur) && largeur > 0) {
+                document.getElementById('longueur').removeAttribute('style'); //Réinitialise le style de l'élement
+                document.getElementById('largeur').removeAttribute('style');
+                let superficie = longueur * largeur //Calcul de la superficie
+                document.getElementById('rep').innerHTML = "Superficie: " + superficie; //Afficher le résultat de la superficie
+                document.images[0].src = "ok.jpg"; //Changement de l'image
+            } else {
+                if (isNaN(longueur) || longueur <= 0) {
+                    document.getElementById('longueur').style.cssText = "border-color:red; background-color:pink"; //Bordures rouges et fond rose si valeur non acceptée
+                }
+                if (isNaN(largeur) || largeur <= 0) {
+                    document.getElementById('largeur').style.cssText = "border-color:red; background-color:pink";
+                }
+                document.getElementById('rep').innerHTML = "Erreur!"; //Affiche Erreur dans la zone bleue
+                document.images[0].src = "not_ok.jpg"; //Change l'image
+            }
+        }
+
+        function calculerPerimetre() {
+            let frmSuperficie = document.getElementById('formLonLarg');
+            let longueur = parseInt(frmSuperficie.longueur.value);
+            let largeur = parseInt(frmSuperficie.largeur.value);
+
+            //Contraintes de validations
+            if (!isNaN(longueur) && longueur > 0 && !isNaN(largeur) && largeur > 0) {
+                document.getElementById('longueur').removeAttribute('style'); //Réinitialise le style de l'élement
+                document.getElementById('largeur').removeAttribute('style');
+                let perimetre = (longueur + largeur) * 2 //Calcul de la superficie
+                document.getElementById('rep').innerHTML = "Perimètre: " + perimetre; //Afficher le résultat de la superficie
+                document.images[0].src = "ok.jpg"; //Changement de l'image
+            } else {
+                if (isNaN(longueur) || longueur <= 0) {
+                    document.getElementById('longueur').style.cssText = "border-color:red; background-color:pink"; //Bordures rouges et fond rose si valeur non acceptée
+                }
+                if (isNaN(largeur) || largeur <= 0) {
+                    document.getElementById('largeur').style.cssText = "border-color:red; background-color:pink";
+                }
+                document.getElementById('rep').innerHTML = "Erreur!"
+                document.images[0].src = "not_ok.jpg";
+            }
+        }
+    </script>
+</body>
+</html>
