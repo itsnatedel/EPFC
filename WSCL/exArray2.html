@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JS exArray2</title>
+</head>
+
+<body>
+    <script>
+        //1. Déclarer un tableau de 5 nombres entiers compris entre 0 et 99 (générés de façon aléatoire)
+        let nbAlea = [];
+        for (let i = 0; i < 5; i++) {
+            nbAlea[i] = Math.round(Math.random() * 100); //Génère un entier compris entre 0 et 99 puis l'arrondit
+        }
+        console.log(nbAlea);
+
+        //2. Afficher ces nombres:
+        //a. Affichage brut: 14,7,2,74,3
+        let arrNb = [14, 7, 2, 74, 3];
+        console.log("2.A : " + arrNb.toString());
+
+        //b. Affichage personnalisé 1: liste à puces
+        document.write("2.B");
+        document.write("<ul>");
+        for (let i = 0; i < arrNb.length; i++) {
+            document.write("<li>" + arrNb[i] + "</li>");
+        }
+        document.write("</ul>");
+
+        //c. Affichage personnalisé 2: 14-7-2-74-3
+        arrNb = arrNb.join("-");
+        console.log("2.C : " + arrNb);
+
+        //3. Affichez le tableau trié par ordre croissant, puis trié par ordre décroissant.
+        //Veuillez fournir une solution 1 sans fonction de tri et une solution 2 avec.
+        //3.1 Sans fonction de tri
+        //Ordre croissant
+        arrNb = [14, 7, 2, 74, 3];
+        arrNb = arrNb.sort((a, b) => a - b);
+        console.log("3.1 Croissant: " + arrNb);
+        //Ordre décroissant
+        arrNb = arrNb.reverse();
+        console.log("3.1 Décroissant: " + arrNb);
+
+        //3.2 Avec fonction de tri
+        //Fonction Tri Croissant (L45-49) puis Tri Décroissant
+        arrNb = [14, 7, 2, 74, 3];
+        function ascSort(a, b) {
+            if (a > b) return 1;
+            if (a < b) return -1;
+            return 0;
+        }
+        function descSort(a, b) {
+            if (a < b) return 1;
+            if (a > b) return -1;
+            return 0;
+        }
+        arrNb.sort(ascSort);
+        console.log("3.2 Croissant: " + arrNb);
+        arrNb.sort(descSort);
+        console.log("3.3 Décroissant: " + arrNb);
+
+        //4. Afficher la plus petite (min) et la plus grande valeur (max) présentes dans le tableau.
+        arrNb = [14, 7, 2, 74, 3];
+        let minNb = Math.min(...arrNb); //Math.min(...numbers) renvoie la plus petite valeur -> les "..." sont nécessaires!
+        let maxNb = Math.max(...arrNb); //Math.min(...numbers) renvoie la plus grande valeur -> les "..." sont nécessaires!
+        console.log("4. Min: " + minNb);
+        console.log("4. Max: " + maxNb);
+
+        //5. Trier le tableau de façon à obtenir les nombres impairs en premier puis les nombres pairs.
+        //5.1 Sans fonction de tri
+        arrNb = [14, 7, 2, 74, 3];
+        let evenNb = [];
+        let oddNb = [];
+        for (let i = 0; i < arrNb.length; i++) {
+            if (arrNb[i] % 2 == 0) { //Si la valeur est paire
+                evenNb.push(arrNb[i]); //Ajoute la valeur dans l'array evenNb
+            } else { //Si la valeur est impaire
+                oddNb.push(arrNb[i]); //Ajoute la valeur dans l'array oddNb
+            }
+        }
+        arrNb = oddNb.concat(evenNb);
+        console.log("5.1 Pas de fonction de tri, impairs puis pairs: " + arrNb);
+
+        //5.2 Avec fonction de tri
+        arrNb = [14, 7, 2, 74, 3];
+        let oddArr = [];
+        let evenArr = []
+        function oddEven(arrNb) {
+            for (let i = 0; i < arrNb.length; i++) {
+                if (arrNb[i] % 2 == 0) {
+                    evenArr.push(arrNb[i]);
+                } else {
+                    oddArr.push(arrNb[i]);
+                }
+            }
+        }
+        oddEven(arrNb);
+        arrNb = oddArr.concat(evenArr);
+        console.log("5.2 Avec fonction de tri, impairs puis pairs: " + arrNb);
+
+        //6. Modifier trois valeurs du tableau au hasard en inversant leur signe.
+        arrNb = [14, 7, 2, 74, 3];
+        let arrInv = [];
+        let random_key = 0;
+
+        function inverse(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                arr[i] = -(arr[i]); //Remplace la valeur arr[i] par son négatif
+            }
+            return arr; //Récupèration du résultat
+        }
+
+        for (let i = 0; i < 3; i++) {
+            random_key = Math.floor(Math.random() * arrNb.length);
+            for (let j = 0; j < arrNb.length; j++) {
+                if (arrNb.indexOf(arrNb[j]) === random_key) {
+                    arrInv.push(arrNb[j]);
+                    arrNb.splice(arrNb.indexOf(arrNb[j]), 1);
+                }
+            }
+        }
+        inverse(arrInv);
+        arrNb = arrNb.concat(arrInv);
+        console.log("6. " + arrNb);
+
+        //7. Calculer et afficher la moyenne des nombres positifs présents dans le tableau.
+        //Cette moyenne est calculée avec l'array arrNb, généré et inversé aléatoirement (voir exercice 6)! Les réponses des moyennes vont varier!
+        let somme = 0;
+        let cpt = 0;
+        let moyenne = 0;
+        for (let i = 0; i < arrNb.length; i++) {
+            if (arrNb[i] > 0) {
+                somme += arrNb[i];
+                cpt++;
+            }
+        }
+        moyenne = somme / cpt;
+        console.log("7. Moyenne :" + moyenne);
+
+        //8. Supprimer les deux premières valeurs du tableau.
+        for (let i = 0; i < 2; i++) {
+            arrNb.shift();
+        }
+        console.log("8. " + arrNb);
+
+        //9. Ajouter deux valeurs négatives au choix à la fin du tableau.
+        for (let i = 0; i < 2; i++) {
+            arrNb.push(-(Math.floor(Math.random() * 100))); //Génère un nombre aléatoire entre 0 et 100 non compris puis change son signe (-)
+        }
+        console.log("9. " + arrNb);
+
+        //10. Supprimer les deux premières valeurs négatives du tableau.
+        arrNb2 = [14,2,-74,-3,-5,9];
+        let cptNeg = 0; //Compteur d'incrémentation
+        for (let i = 0; i < arrNb2.length; i++) {
+            if (arrNb2[i] < 0) {
+                arrNb2.splice(i,1);
+                cptNeg++; //Incrémentation du compteur
+                if (cptNeg === 2) {
+                    break;
+                }
+            }
+        }
+        console.log("10. " + arrNb2);
+
+        //11. Ajouter la valeur 7 après la première valeur positive du tableau.
+        let cptPositif = 0;
+        for (let i = 0; i < arrNb2.length; i++) {
+            if (arrNb2[i] > 0) {
+                arrNb2.splice(i+1,0,7); //i+1 car on veut insérer 7 APRÈS la première valeur positive
+                cptPositif++;
+            }
+            if (cptPositif === 1) {
+                break;
+            }
+        }
+        console.log("11. " + arrNb2);
+
+        //12. Supprimer les deux dernières valeurs négatives du tableau.
+        arrNb2 = [14,2,-74,-3,-5,9];
+        cptNeg = 0;
+        for (let i = arrNb2.length; i > 0; i--) { //Décrémentation car on veut commencer par les dernières valeurs
+            if (arrNb2[i] < 0) {
+                arrNb2.splice(i,1);
+                cptNeg++;
+            }
+            if (cptNeg === 2) {
+                break;
+            }
+        }
+        console.log("12. " + arrNb2);
+
+        //13. Ajouter la valeur 7 après la dernière valeur positive du tableau.
+        arrNb3 = [14,2,-5,3,-1];
+        for (let i = arrNb3.length; i > 0; i--) { //Décrémentation car on veut commencer par les dernières valeurs
+            if (arrNb3[i] > 0) {
+                arrNb3.splice(i+1,0,7); //i+1 car on veut insérer 7 APRÈS la dernière valeur positive
+                break;
+            }
+        }
+        console.log("13. " + arrNb3);
+    </script>
+</body>
+
+</html>
