@@ -328,7 +328,7 @@
         $nbLangues = [];
         foreach ($infosPays as $pays => &$tabData) {
             if ($tabData["monnaie"] != "euro") {
-                array_push($horsEU, $pays); //2 Japon Suisse
+                array_push($horsEU, $pays); 
             }
             
         }
@@ -362,15 +362,12 @@
         }
 
         echo "h. Affichez une donnée au hasard pour chaque pays (PAYS – INFO: VALEUR).";
-        $random_key = null;
-        $hasard = null;
-        foreach ($infosPays as $pays => &$tabData) {
+        foreach ($infosPays as $pays => $tabData) {
             $pays = strtoupper($pays);
             echo "<p>$pays - ";
             $random_key = array_rand($tabData);
-            $random_key = strtoupper($random_key);
-            echo "$random_key: </p>";
-            $random_key = strtolower($random_key);
+            echo strtoUpper($random_key) . ": </p>";
+
             if (is_array($tabData[$random_key])){
                 $hasard = array_rand($tabData["$random_key"]);
                 echo "<p> " . $tabData[$random_key][$hasard] . "</p>";
