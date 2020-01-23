@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>DateHeure2</title>
 </head>
+
 <body>
     <script>
         //2. Quel jour de la semaine serons-nous cette année à noël?
@@ -82,17 +84,27 @@
         // second for loop counts all day within that [i] month 
         // if nbDay != 31 => store in diff arr
         // if month = feb => store in arrFeb
-        dateTry = new Date(); //Wed Jan 29 2020 16:16:24 GMT+0100 (heure normale d’Europe centrale)
-        arrThirty = new Array();
-        /* for (let i = 0; i < 12; i++) {
-            dateTry.setMonth(i);
-            console.log(dateTry);
-            break;
-            //return new Date(year, month, 0).getDate();
-            if (dateTry.getDate() === 31) {
 
-            }
-        } */
+        //Janvier
+        let dateTry = new Date(2020,1,0); // rt 31
+        let nbJoursJanvier = dateTry.getDate(); 
+        let tabMois = [
+            key30: ["avril","..."];
+            key31: ["dec","..."];
+            key28: "und";
+            key29: ["fev"];
+        ];
+        tabMois[31] = mois[0];
+        tabMois[nbJours] = mois[date.getMonth()];
+        console.log(nbJours,'\n');
+
+        dateTry.setMonth(2);
+        dateTry.setDate(0);
+
+        dateTry.setMonth(dateTry.getMonth()+1);
+        console.log(dateTry.getDate(), '\n');
+
+
     </script>
 </body>
 
