@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DateHeure2</title>
+</head>
+<body>
+    <script>
+        //2. Quel jour de la semaine serons-nous cette année à noël?
+        const noel = new Date(2020, 11, 25);
+        const jourSemNoel = noel.getDay();
+        const semaine = new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+        const jourNoel = semaine[jourSemNoel];
+
+
+        //3. Quelle date serons-nous mercredi de la semaine prochaine?
+        let dateAuj = new Date();
+        dayAuj = dateAuj.getDay();
+        let dateMercredi = new Date();
+
+        switch (dayAuj) {
+            case 0:
+                dateMercredi.setDate(dateMercredi.getDate() + 3);
+                break;
+
+            case 1:
+                dateMercredi.setDate(dateMercredi.getDate() + 9);
+                break;
+
+            case 2:
+                dateMercredi.setDate(dateMercredi.getDate() + 8);
+                break;
+
+            case 3:
+                dateMercredi.setDate(dateMercredi.getDate() + 7);
+                break;
+
+            case 4:
+                dateMercredi.setDate(dateMercredi.getDate() + 6);
+                break;
+
+            case 5:
+                dateMercredi.setDate(dateMercredi.getDate() + 6);
+                break;
+
+            case 6:
+                dateMercredi.setDate(dateMercredi.getDate() + 6);
+                break;
+        }
+        console.log(dateMercredi);
+        //4. Afficher la date du jour dans le format suivant : "Ce vendredi, nous sommes le 17 février 2006."
+        function affDate() {
+            let dateToday = new Date();
+            
+            const semaineArr = new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+            
+            let jourSemaine = dateToday.getDay();
+            
+            const jour = semaineArr[jourSemaine];
+            const monthsArr = new Array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+            let moisToday = dateToday.getMonth();
+
+            let moisTexte = monthsArr[moisToday];
+            
+            document.write("<p>Ce " + jour + ", nous sommes le " + dateToday.getDate() + " " + moisTexte + " " + dateToday.getFullYear() + "</p>");
+        }
+
+        affDate();
+
+        //5. Si nous sommes le 23 mars 2010, quelle date serons-nous dans 15 jours?
+        const monthsArr = new Array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+        let dateCinq = new Date(2010, 2, 23);
+        let dateQuinze = dateCinq;
+        dateQuinze.setDate(dateQuinze.getDate() + 15);
+        document.write("<p> Dans quinze jours nous serons le " + dateQuinze.getDate() + " " + monthsArr[dateQuinze.getMonth()] + " " + dateQuinze.getFullYear() + "</p>");
+
+        //6. Affichez tous les mois de 30 jours, puis ceux de 31 jours et le nombre de jours du mois de février de cette année
+
+        //  TODO: date[0] <- goes back one month
+        // push in array all 30days-months then push all 31days-months then push feb
+        // first for loop counts all months
+        // second for loop counts all day within that [i] month 
+        // if nbDay != 31 => store in diff arr
+        // if month = feb => store in arrFeb
+        dateTry = new Date(); //Wed Jan 29 2020 16:16:24 GMT+0100 (heure normale d’Europe centrale)
+        arrThirty = new Array();
+        /* for (let i = 0; i < 12; i++) {
+            dateTry.setMonth(i);
+            console.log(dateTry);
+            break;
+            //return new Date(year, month, 0).getDate();
+            if (dateTry.getDate() === 31) {
+
+            }
+        } */
+    </script>
+</body>
+
+</html>
