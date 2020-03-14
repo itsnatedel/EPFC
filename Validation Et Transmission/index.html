@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Formulaire</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Formulaire d'inscription</h1>
+    <form method="post" id="frmInscription" action="php/get_user.php" enctype="multipart/form-data" onreset="reset()">
+        <fieldset>
+            <legend>Identification</legend>
+
+            <!-- Données Utilisateur -->
+            <div id="pseudo"><label>Pseudo :</label> <input name="pseudo" type="text"></div>
+            <div id="pwd"><label>Mot de passe :</label> <input name="pass" type="password"></div>
+            <div id="mail"><label>E-mail :</label> <input name="email" type="text"></div>
+            <div id="genre"><label>Sexe :</label>
+                <input type="radio" name="sexe" value="f"> <label>F</label>
+                <input type="radio" name="sexe" value="h"> <label>H</label>
+            </div>
+
+            <!-- Sélection Pays -->
+            <div id="pays"><label>Pays :</label>
+                <select name="listePays" id="listePays">
+                    <option value="0">Choisissez un pays</option>
+
+                    <optgroup label="Europe">
+                        <option value="be">Belgique</option>
+                        <option value="fr">France</option>
+                        <option value="it">Italie</option>
+                        <option value="gr">Grèce</option>
+                        <option value="es">Espagne</option>
+                    </optgroup>
+
+                    <optgroup label="Hors Europe">
+                        <option value="gb">Royaume-Uni</option>
+                        <option value="us">États-Unis</option>
+                        <option value="ca">Canada</option>
+                        <option value="ru">Russie</option>
+                    </optgroup>
+
+                    <optgroup label="Asie">
+                        <option value="ch">Chine</option>
+                        <option value="jp">Japon</option>
+                    </optgroup>
+                </select>
+            </div>
+            
+        </fieldset>
+
+        <fieldset>
+            <legend>Options</legend>
+            <!-- Offres -->
+            <div id="choix"><label>S&eacute;lection :</label>
+                <input type="checkbox" name="choix[]" value="1"> <label>Light</label>
+                <input type="checkbox" name="choix[]" value="2"> <label>Medium</label>
+                <input type="checkbox" name="choix[]" value="3"> <label>Speed</label><br>
+            </div>
+
+            <!-- Signature -->
+            <div id="signature"><label>Signature :</label><br>
+                <textarea cols="30" rows="5" name="signature"></textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <input type="hidden" name="MAX_FILE_SIZE" value="300000">
+            <!-- Fichier -->
+            <div><label>Votre CV:</label> <input type="file" name="cv"></div>
+        </fieldset>
+
+        <!-- Bouttons -->
+        <div>
+            <input type="submit" name="send" value="Envoyer">
+            <input type="reset" name="cancel" value="Recommmencer" onclick="reset()">
+        </div>
+    </form>
+    <div id="message"></div>
+    <script src="js/validation.js"></script>
+</body>
+
+</html>
