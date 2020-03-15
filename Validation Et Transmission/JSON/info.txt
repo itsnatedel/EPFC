@@ -1,0 +1,1 @@
+Path pour les fichiers JSON générés par le fichier adduser.php
