@@ -51,7 +51,7 @@ window.onload = function() {
     let chkbox = document.getElementsByName("choix[]");
     let checkedBox = 0;
 
-    // Vérifie si la syntaxe du pseudo
+    // Vérifie la syntaxe du pseudo
     if (pseudo == "" || pseudo.length > 8) {
       // Met le champ en couleur rose
       pseudoField.style.backgroundColor = "pink";
@@ -67,7 +67,7 @@ window.onload = function() {
       stopScript();
     }
 
-    // Vérification de la syntaxe du mot de passe
+    // Vérifie la syntaxe du mot de passe
     if (pwd == "" || !regPwd.test(pwd)) {
       if (!regPwd.test(pwd)) { // Si le password ne correspond pas au regEx regPwd
         alert(
