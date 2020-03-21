@@ -1,0 +1,34 @@
+/* CSS Document */
+/* ELEMENTS */
+body { margin:10px; }
+
+h1 { font:14pt Impact; }
+h2 { font-size:12pt; margin:0; margin-top:20px; }
+p { margin:0; margin-bottom:20px; }
+label { font-weight:bold; }
+label.normal { font-weight:normal; }
+
+/* DIVISIONS */
+#main { border:2px solid darkblue; padding:5px; width:450px; }
+
+#colonne { width:220px; position:absolute; left:500px; top:10px; }
+	#colonne h1 { font-family:Arial; font-size:95%; font-weight:bold; }
+
+#divLog { border:2px solid darkgreen; margin-bottom:20px; padding:5px; }
+	#divLog h1 { margin:0; }
+	
+#aide { border:2px solid darkgreen; }
+	#aide h1 { background-color:#00CC66; border-bottom:1px solid darkgreen; padding:2px; padding-left:5px; margin:0; }
+	#aide ul { margin:0; margin-left:20px; margin-bottom:10px; padding:0; }
+	
+#disconnect { float:right; }
+
+/* FORMULAIRES */
+#frmSign { text-align:right; margin-right:10px; }
+
+#frmLog { }
+	#frmLog input[name=go] { width:75px; }
+	#frmLog label[for=keepLogin] { font-weight:normal; }
+	
+#frmMail { }
+	#frmMail input { margin-bottom:10px; }
