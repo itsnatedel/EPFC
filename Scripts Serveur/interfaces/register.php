@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "config.php";
+include "config.php";
 $message = "";
 
 if (isset($_POST['go'])) {
@@ -10,8 +10,8 @@ if (isset($_POST['go'])) {
         $pwd = $_POST['password'];
         $confPwd = $_POST['confPwd'];
 
-        $regexMail = '/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+/';
-        $regexPwd = '/.*(?=.*[A-Z])(?=.*[0-9]+)(?=.*[a-z]).*/';
+        $regexMail = '/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+/'; // Obligatoire : @ + domaine (gmail, yahoo, ...) + domaine (.com, .fr, ...)
+        $regexPwd = '/.*(?=.*[A-Z])(?=.*[0-9]+)(?=.*[a-z]).*/'; // Obligatoire : 1 majuscule + 1 chiffre + 1 minuscule
 
         // Contraintes pour le login
         if (strlen($login) > 60) {
@@ -32,29 +32,24 @@ if (isset($_POST['go'])) {
                     $message = "Les mots de passe sont trop longs !";
                 } else {
                     // Appel du script password_hash.php
-                    include "password_hash.php"; // Renvoie le mot de passe hashé
-
+                    include "password_hash.php"; // Renvoie le mot de passe hashé 
                     // Connexion à la DDB
                     $mysql = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
 
                     // Requête SQL SELECT
                     $query = "SELECT email FROM `users` WHERE email='$mail'";
 
-                    // Résultat 
-                    $result = mysqli_query($mysql, $query);
+                    mysqli_query($mysql, $query);
 
-                    // Si le mail fait déjà parti de la DDB
+                    // Si l'adresse mail fait déjà parti de la DDB
                     if (mysqli_affected_rows($mysql) !== 0) {
                         $message = "Vous êtes déjà inscrit !";
-                        mysqli_free_result($result);
                     } else {
-                        // Requête SQL INSERT
                         $query = "INSERT INTO `users` (login, password, email) VALUES ('$login','$pwd','$mail')";
                         mysqli_query($mysql, $query);
                         $message = "Vous êtes désormais inscrit !";
                         setcookie("user", $login);
                     }
-
                     mysqli_close($mysql);
                 }
             }
@@ -86,7 +81,7 @@ if (isset($_POST['go'])) {
         <label for="email">Email:</label><br />
         <input type="email" id="email" name="email" placeholder="Entre votre email" required/> <br/>
 
-        <label>Mot de passe (au moins 1 majuscule, 1 chiffre)</label><br />
+        <label>Mot de passe (au moins 1 minuscule, 1 majuscule et 1 chiffre)</label><br />
         <input type="password" name="password" placeholder="Entrez votre mot de passe" required/> <br/>
 
         <label>Confirmez le mot de passe</label><br />

@@ -1,7 +1,7 @@
 <?php
-    // Fichier qui se charge de déconnecter un utilisateur
-    require "config.php";
+    // Script qui se charge de déconnecter un utilisateur
     session_destroy();
+    include "config.php";
 
     // Suppréssion d'un éventuel cookie
     setcookie("user","");

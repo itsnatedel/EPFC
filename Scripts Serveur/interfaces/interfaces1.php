@@ -1,14 +1,13 @@
 <?php
 session_start();
-require 'config.php';
+include 'config.php';
 
 if (isset($_POST['go'])) {
 
 	if (!empty($_POST['login']) && !empty($_POST['password'])) {
 		$login = $_POST['login'];
 		$pwd = $_POST['password'];
-
-
+		
 		// Connexion à la DDB
 		$mysql = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
 
@@ -19,30 +18,32 @@ if (isset($_POST['go'])) {
 
 		// Résultat 
 		$result = mysqli_query($mysql, $query);
-		var_dump($result);
+
 		if ($result) {
 			$user = mysqli_fetch_assoc($result);
 			mysqli_free_result($result);
 		}
-		// Si l'utilisateur est inconnu de la BDD -> redir vers page "Accès Refusé"
+		// Si l'utilisateur est inconnu de la BDD -> redirection vers page "Accès Refusé"
 		if (mysqli_affected_rows($mysql) == 0) {
 			$_SESSION['login'] = $login;
+			mysqli_close($mysql);
 			header('Status: 302 Temporary');
 			header('Location: ' . SITE_URL . '/interfaces11b.php');
 			exit;
 		}
-		mysqli_close($mysql);
+		
 
 		// Si Retenir login est coché -> Création du cookie
 		if (isset($_POST['keepLogin'])) {
 			setcookie("user", $login);
-			var_dump($_COOKIE);
 		}
+
 		if (password_verify($pwd, $user['password'])) {
 			// Auth -> sauvegarde login dans variable session
 			$_SESSION['login'] = $login;
+			mysqli_close($mysql);
 			
-			// Redir vers la interfaces 1.1.a (user connecté)
+			// Redirection vers la interfaces 1.1.a (user connecté)
 			header('Status: 302 Temporary');
 			header('Location: ' . SITE_URL . '/interfaces11a.php');
 			exit;
@@ -87,7 +88,7 @@ if (isset($_POST['go'])) {
 				<label>Login</label><br />
 				<input type="text" name="login" value="<?php echo isset($_COOKIE['user']) ? $_COOKIE['user'] : ''; ?>" required /><br />
 				<label>Mot de passe</label><br />
-				<input type="text" name="password" required /><br />
+				<input type="password" name="password" required /><br />
 				<input type="checkbox" name="keepLogin" /> <label for="keepLogin" class="normal">Retenir login</label><br />
 				<input type="reset" value="&gt; effacer" /> <input type="submit" name="go" value="&gt; Go" />
 			</form>
@@ -97,7 +98,7 @@ if (isset($_POST['go'])) {
 			<h1>Aide</h1>
 			<ul>
 				<!-- Bouton oubli login/pwd -->
-				<li><a href="<?php echo SITE_URL ?>/interfaces12a.php">Oubli&eacute; mon login/mot de passe</a></li>
+				<li><a href="<?= SITE_URL ?>/interfaces12a.php">Oubli&eacute; mon login/mot de passe</a></li>
 
 				<!-- Bouton Support -->
 				<li><a href="<?= SITE_URL ?>/support.html">Support en ligne</a></li>

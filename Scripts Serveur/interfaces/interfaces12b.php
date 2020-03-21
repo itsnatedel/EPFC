@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "config.php";
+include "config.php";
 
 if (isset($_SESSION['mail'])) {
 
@@ -43,7 +43,8 @@ if (isset($_SESSION['mail'])) {
     }
 
     $pwd = generatePassword();
-    $mailpwd = $pwd;
+    $pwdEmail = $pwd;
+    
     
     // Appel du script password_hash.php
     include "password_hash.php"; // Renvoie le mot de passe hashé
@@ -51,7 +52,7 @@ if (isset($_SESSION['mail'])) {
     // Requête SQL pour modifier l'ancien mot de passe avec le nouveau hashé
     $query = "UPDATE `users` SET password='$pwd' WHERE login='$login'";
 
-    mysqli_query($mysql, $query); // Envoie la requête au serveur
+    mysqli_query($mysql, $query);
 
     mysqli_close($mysql);
 
@@ -64,10 +65,13 @@ if (isset($_SESSION['mail'])) {
     Nous avons bien reçu votre demande d\'oubli de login/mot de passe.
     Voici les informations qui vous permettront de vous connecter :
     Login: ' . $login . '
-    Votre nouveau mot de passe : ' . $mailPwd . '';
+    Votre nouveau mot de passe : ' . $pwdEmail . '';
+
+    // Headers mail (From est requis)
+    $headers = 'From: <support@interfaces.com>';
 
     // Envoi du mail
-    mail($to, $subject, $message);
+    mail($to, $subject, $message, $headers); 
 }
 ?>
 

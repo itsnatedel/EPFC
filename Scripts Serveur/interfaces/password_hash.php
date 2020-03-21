@@ -1,6 +1,5 @@
 <?php
-$hash = password_hash($pwd,PASSWORD_DEFAULT);
+$hash = password_hash($pwd,PASSWORD_DEFAULT); // Hashage du mot de passe
 
-// Renvoie le mot de passe hashé
 $pwd = $hash;
 ?>
