@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus - Passagers</title>
+</head>
+
+<body>
+    <script>
+        // Objet busCharleroi JSON
+        const busCharleroi = {
+            driver: "Bob",
+            passengers: [
+                {
+                    nom: "Carla",
+                    dateNaissance: new Date(2012, 2, 22),
+                    sexe: "h",
+                },
+
+                {
+                    nom: "Marc",
+                    dateNaissance: new Date(1989, 3, 3),
+                    sexe: "f",
+                },
+            ],
+            NB_MAX_PASSAGERS: 10,
+        };
+
+        // Objet Passager (syntaxe class)
+
+        class Passager {
+            constructor(firstname, birthday, gender) {
+                // Propriétés
+                this.firstname = firstname;
+                let dateParts = birthday.split('-');
+                let birthDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+                this.birthday = birthDate.toDateString();
+                this.gender = gender;
+            }
+        }
+
+        // Objet Bus (syntaxe class)
+        class Bus {
+            constructor(driver, passengers, NB_MAX_PASSAGERS) {
+                // Propriétés
+                if (passengers.length == 0) {
+                    passengers = [];
+                }
+                this.driver = driver; // Nom du chauffeur
+                this.passengers = passengers; // Les passagers (Objets dans un array)
+                this.NB_MAX_PASSAGERS = NB_MAX_PASSAGERS; // La capacité du bus
+
+
+                if (this.NB_MAX_PASSAGERS < 1) {
+                    throw new Error('La capacité ne peut pas être inférieure ou égale à 0 !');
+                }
+
+                this.rempli = false; // Initialisation à false
+            }
+
+            // Vérifie s'il reste des places libres dans le bus
+            isFull = function () {
+                if (this.passengers.length >= this.NB_MAX_PASSAGERS) { // Nombres de passagers >= Capacité du bus ? -> Bus plein
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            // Retourne le nombre de places disponibles
+            get remainingSeats() {
+                return (this.NB_MAX_PASSAGERS - this.passengers.length);
+            }
+
+            // Récupère le dernier passager entré dans le bus
+            get lastbusPassenger() {
+                return this.passengers[this.passengers.length - 1]; // Dernier index du tableau passagers
+            }
+
+            // Ajoute un passager 'p' (-> objet!)
+            addPassenger = function (p) {
+                let passengers = this.passengers;
+                // Vérifie s'il reste des places dans le bus
+                if (this.passengers.length >= this.NB_MAX_PASSAGERS) {
+                    return false;
+                } else {
+                    passengers.push(p); // Envoi du nouveau passager dans le tableau passager
+                    return true;
+                }
+            }
+
+            // Retire un passager en fonction de son prénom (firstname)
+
+            dropOff = function (firstname) {
+                for (let i = 0; i < this.passengers.length; i++) {
+                    if (this.passengers[i].firstname === firstname) {
+                        this.passengers.splice(i, 1); // Supprime l'index du passager 
+                        return true;
+                    }  /** Manque le return false s'il le nom ne figure pas dans le bus.
+                        * Mettre un else(return false;) après la condition if(ligne 101) bloque la boucle for et empêche le script de continuer. */
+                }
+            }
+
+            // Calcule l'âge moyen des passagers 
+            computeAverageAge = function () {
+                // Initialisation des variables
+                let arrBirthdays = [];
+                let sumAge = 0;
+                let moyenne = 0;
+
+                // Récupère l'âge des passagers
+                for (let i = 0; i < this.passengers.length; i++) {
+
+                    /**  new Date() -> crée une date au moment présent 
+                    * -> getFullYear() -> récupère l'année (4 chiffres)
+                    * -> Différence de l'année de naissance du passager avec l'année en cours (obtention de l'âge)
+                    * -> Envoi de l'âge dans l'array arrBirthdays
+                    */
+                    let age = new Date().getFullYear() - this.passengers[i].dn.getFullYear();
+                    arrBirthdays.push(age);
+                }
+
+                // Somme des âges 
+                for (let j = 0; j < arrBirthdays.length; j++) {
+                    sumAge += arrBirthdays[j];
+                }
+
+                moyenne = sumAge / arrBirthdays.length; // Calcul de la moyenne des âges
+                return moyenne;
+            }
+
+            // Convertit des variables en une chaîne de caractères
+            toString = function () {
+                // Initialisation des variables
+                let arrNomPassagers = [];
+                let placesLeft = 0;
+                let str = 'Le nom du chauffeur: ';
+                str += this.driver; // Ajout du nom du chauffeur
+
+                for (let i = 0; i < this.passengers.length; i++) {
+                    arrNomPassagers.push(this.passengers[i].nom); // Envoie des noms des passagers dans arrNomPassagers
+                }
+
+                // Calcul des places restantes
+                placesLeft = this.NB_MAX_PASSAGERS - this.passengers.length;
+
+                // Regroupement des infos
+                str += ', les noms des passagers : ' + arrNomPassagers.join(" et ") + ', le nombre de places restantes dans le bus : ' + placesLeft + ' place(s)';
+                return str;
+            }
+        }
+
+        // Tests
+        // Créer un objet Bus vide d'une capacité de 10 passagers et conduit par Marco 
+        let busMarco = new Bus("Marco", '', 10);
+        console.log(busMarco);
+
+        // Créer deux objets Passager avec des données différentes au choix
+        let Justine = new Passager("Justine", "1998-5-21", "f");
+        console.log(Justine);
+        let Kylian = new Passager("Kylian", "2013-8-3", "h");
+        console.log(Kylian);
+
+        // Ajouter les deux passagers un par un dans le Bus si le Bus n'est pas plein
+        busMarco.addPassenger(Justine);
+        busMarco.addPassenger(Kylian);
+        console.log(busMarco);
+
+        // Afficher le nombre de places restantes
+        console.log("Places restantes: " + busMarco.remainingSeats);
+
+        // Afficher le dernier passager
+        console.log(busMarco.lastbusPassenger);
+
+        // Retirer une des deux passagers du Bus
+        busMarco.dropOff("Kylian");
+        console.log(busMarco);
+
+        // Afficher le nombre de places restantes
+        console.log("Places restantes: " + busMarco.remainingSeats);
+
+        // Afficher le dernier passager
+        console.log(busMarco.lastbusPassenger);
+
+        // Afficher la description du Bus dans une boîte de dialogue
+        descriptionBus = function (bus) {
+            this.bus = bus;
+            this.bus.driver = bus.driver;
+            this.bus.passengers = bus.passengers;
+            this.bus.capacity = this.bus.NB_MAX_PASSAGERS;
+
+            let str = '';
+            let names = [];
+
+            for (let i = 0; i < this.bus.passengers.length; i++) {
+                names.push(this.bus.passengers[i].firstname);
+            }
+
+            str = "Le chauffeur : " + this.bus.driver + ", le/les passager(s) : " + names.join(" et ") + " et son nombre de place : " + this.bus.capacity + " place(s)";
+            return str;
+        }
+        alert(descriptionBus(busMarco));
+
+        // Créer un objet Bus d'une capacité de places dont la valeur générée aléatoirement est un chiffre compris entre -50 et 20, afficher un message d'erreur si une exception se produit
+        randomNumber = function (min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        let min = -50;
+        let max = 20;
+
+        let randomCapacity = randomNumber(min, max);
+        console.log("Capacité générée : " + randomCapacity);
+        let busRandom = new Bus("busRandom", "", randomCapacity);
+
+    </script>
+</body>
+
+</html>
